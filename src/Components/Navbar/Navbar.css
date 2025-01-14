@@ -1,0 +1,96 @@
+/* import font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+nav {
+    position: relative;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    width:200px;
+    height: 100%;
+
+    padding: 1.5%;
+}
+
+#nav__title {
+    position: relative;
+    top: 5px;
+    font-family: "Hubot Sans", serif;
+    font-optical-sizing: auto;
+    user-select: none;
+}
+
+#nav__top {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 50px;
+}
+
+#nav__top > li:nth-child(n+2) {
+    display: flex;
+    align-items: center;
+}
+
+#nav__top > li:nth-child(n+2) > a {
+    margin-left: 5px;
+}
+
+#nav__top--decorator {
+    margin-bottom: 1px;
+    font-family: "Poppins", serif;
+    font-size: 0.85rem;
+    color: #B4B4B4;
+    margin-left: 3px;
+    margin-bottom: -10px;
+    user-select: none;
+}
+
+#nav__top > li:nth-child(n+2), #nav__bottom > li {
+    position: relative;
+    font-family: "Poppins", serif;
+    font-size: 0.85rem;
+    padding: 15px 0 15px 10px;
+    color: #7B7B7B;
+    border-radius: 15px;
+    /*background:none;*/
+    transition: background 0.3s ease;
+}
+
+#nav__top > li:nth-child(n+2):hover, #nav__bottom > li:hover {
+    cursor: pointer;
+    color: black;
+}
+
+li {
+    background: none; /* Pas de fond par défaut */
+    padding: 10px;
+    position: relative; /* Nécessaire pour le positionnement de l'élément pseudo */
+    overflow: hidden; /* Pour éviter que le gradient dépasse du lien */
+}
+
+/* L'élément pseudo qui contient le fond */
+#nav__top > li:nth-child(n+2)::before {
+    content: ""; /* Nécessaire pour créer l'élément pseudo */
+    position: absolute; /* Pour positionner le gradient derrière le texte */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(129deg, rgba(2,0,36,1) 0%, rgba(235,218,224,1) 0%, rgba(230,221,247,1) 50%);
+    opacity: 0; /* Initialement invisible */
+    transition: opacity 0.2s ease; /* Transition sur l'opacité */
+    z-index: -1; /* Assure que le gradient est derrière le texte */
+}
+
+/* Survol du lien */
+#nav__top > li:nth-child(n+2):hover::before {
+    opacity: 1; /* Le gradient devient visible */
+}
+
+#nav__bottom {
+    margin-top: auto;
+    margin-bottom: 50px;
+}
