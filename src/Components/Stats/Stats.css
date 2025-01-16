@@ -1,0 +1,13 @@
+.main__stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.main__stats > .chart__container {
+    position: relative;
+    margin: auto;
+    height: 80%;
+    width: 100%;
+}

@@ -1,9 +1,11 @@
 import Image from "next/image";
 
 import Alert from "../Alert/Alert";
-import Flux from "../Flux/Flux";
+import Flux from "../Stats/Stats";
 import Tasks from "../Tasks/Tasks";
+import Messages from "../Messages/Message";
 import Plan from "../Plan/Plan";
+import Stats from "../Stats/Stats";
 
 import "./Main.css";
 
@@ -29,18 +31,19 @@ export default function Main(){
             <main>
                 <div className="main__top">
                     <Alert />
-                    <Tasks />
-                    <Flux />
+                    <Messages />
+                    <Stats />
                     <div className="main__plan--wrapper">
                         <Plan />
                     </div>
                 </div>
                 <div className="main__bottom">
-                    <div className="main__bottom--left">
-
+                    <Tasks />
+                    <div className="test">
+                        <p>Hello,</p>
                     </div>
-                    <div className="main__bottom--right">
-
+                    <div className="test2">
+                        <p>World!</p>
                     </div>
                 </div>
             </main>

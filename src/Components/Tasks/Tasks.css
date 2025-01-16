@@ -1,0 +1,101 @@
+.main__tasks {
+    width: 100%;
+    font-family: "Poppins", serif;
+    background-color: white;
+    font-size: 0.80rem;
+    overflow: hidden; /* Pour éviter un double scroll */
+    display: flex;
+    flex-direction: column;
+    max-height:400px;
+    min-height: 200px;
+}
+
+/* Header principal */
+.main__tasks--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: sticky;
+    flex-shrink: 0;
+    top: 0;
+    padding: 10px;
+    min-height: 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+.main__tasks--header h2 {
+    font-size: 1.2rem;
+}
+
+.main__tasks--addBtn {
+    padding: 8px 15px;
+    background: rgba(200,179,240,1);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.main__tasks--addBtn:hover {
+    background: rgb(217, 202, 245);
+}
+
+/* Table avec scroll */
+.main__tasks--table {
+    width: 100%;
+    display: block;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Header de la table */
+.tasks__table--header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    padding: 10px;
+    font-weight: bold;
+    background: #f8f8f8;
+    position: sticky;
+    z-index: 1;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Lignes de la table */
+.table__row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    background: white;
+    padding: 5px;
+}
+
+/* Fixation des colonnes */
+.tasks__info--date,
+.tasks__info--name,
+.tasks__info--username {
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 5;
+    padding: 5px;
+}
+
+/* Alignement des colonnes */
+.tasks__info--date {
+    left: 0;
+    width: 100px;
+}
+
+.tasks__info--name {
+    left: 120px;
+    width: 200px;
+}
+
+.tasks__info--username {
+    left: 350px;
+    width: 150px;
+}

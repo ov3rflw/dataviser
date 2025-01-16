@@ -57,8 +57,8 @@ main {
 
 .main__top {
     display: flex;
-    margin-top: 4%;
-    justify-content: space-around;
+    margin-top: 3%;
+    justify-content: space-between;
     height: 40%;
     font-family: "Poppins", serif;
 }
@@ -80,10 +80,6 @@ main {
 .main__top > div:nth-child(2),
 .main__top > div:nth-child(4){
     border:3px dotted #b4b4b4;
-}
-
-.main__flux {
-    background-color: white;;
 }
 
 .main__plan--content {
@@ -143,8 +139,30 @@ main {
 
 #levelUp {
     padding: 5px 15px 5px 15px;
-
     color: white;
     background-color: black;
     border-radius: 10px;
 }
+
+.main__bottom {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 3%;
+    height: 40%; /* Même hauteur que .main__top pour l'alignement */
+}
+
+.main__bottom > div:first-child { /* <Tasks> */
+    width: 48%; /* Même largeur que Alert + Messages */
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.main__bottom > div:nth-child(2), /* .test */
+.main__bottom > div:nth-child(3) /* .test2 */ {
+    width: 22%; /* Même largeur que Stats et Plan */
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px;
+}
+
