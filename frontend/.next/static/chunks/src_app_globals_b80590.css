@@ -1,0 +1,18 @@
+/* [project]/src/app/globals.css [app-client] (css) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+
+/*# sourceMappingURL=src_app_globals_b80590.css.map*/

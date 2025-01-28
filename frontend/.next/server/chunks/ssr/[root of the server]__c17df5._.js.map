@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 15, "column": 0}, "map": {"version":3,"sources":["file:///Users/nicolas/IPI/dataviser/src/app/store/store.js"],"sourcesContent":["import { configureStore } from '@reduxjs/toolkit'\n\nexport const makeStore = () => {\n  return configureStore({\n    reducer: {}\n  })\n}"],"names":[],"mappings":";;;AAAA;;AAEO,MAAM,YAAY;IACvB,OAAO,CAAA,GAAA,2LAAA,CAAA,iBAAc,AAAD,EAAE;QACpB,SAAS,CAAC;IACZ;AACF"}},
+    {"offset": {"line": 25, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
+    {"offset": {"line": 31, "column": 0}, "map": {"version":3,"sources":["file:///Users/nicolas/IPI/dataviser/src/app/store/StoreProvider.jsx"],"sourcesContent":["'use client'\nimport { useRef } from 'react'\nimport { Provider } from 'react-redux'\nimport { makeStore } from './store'\n\nexport default function StoreProvider({ children }) {\n  const storeRef = useRef(null)\n  if (!storeRef.current) {\n    storeRef.current = makeStore()\n  }\n\n  return <Provider store={storeRef.current}>{children}</Provider>\n}"],"names":[],"mappings":";;;;AACA;AAEA;AADA;AAFA;;;;;AAKe,SAAS,cAAc,EAAE,QAAQ,EAAE;IAChD,MAAM,WAAW,CAAA,GAAA,qMAAA,CAAA,SAAM,AAAD,EAAE;IACxB,IAAI,CAAC,SAAS,OAAO,EAAE;QACrB,SAAS,OAAO,GAAG,CAAA,GAAA,4HAAA,CAAA,YAAS,AAAD;IAC7B;IAEA,qBAAO,8OAAC,yJAAA,CAAA,WAAQ;QAAC,OAAO,SAAS,OAAO;kBAAG;;;;;;AAC7C"}},
+    {"offset": {"line": 57, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

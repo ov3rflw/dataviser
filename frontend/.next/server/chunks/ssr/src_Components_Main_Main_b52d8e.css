@@ -1,0 +1,162 @@
+/* [project]/src/Components/Main/Main.css [app-client] (css) */
+.main__wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-inline: 1.5%;
+  padding-top: 1.5%;
+  background-color: #f5f3f6;
+}
+
+header {
+  position: relative;
+  display: flex;
+  background-color: #f5f3f6;
+}
+
+.header__top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__top--title {
+  font-family: Poppins, serif;
+  font-size: .95rem;
+}
+
+.header__top--profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.addimg__wrapper {
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+}
+
+.header__top--profile > img:nth-child(2) {
+  border-radius: 50px;
+}
+
+main {
+  height: 100%;
+  background-color: #f5f3f6;
+}
+
+.main__top {
+  display: flex;
+  margin-top: 3%;
+  justify-content: space-between;
+  height: 40%;
+  font-family: Poppins, serif;
+}
+
+.main__top > div:first-child, .main__top > div:nth-child(2), .main__top > div:nth-child(3) {
+  padding: 10px;
+  border-radius: 20px;
+  width: 22%;
+}
+
+.main__top > div:nth-child(4) {
+  width: 22%;
+  border-radius: 20px;
+}
+
+.main__top > div:first-child, .main__top > div:nth-child(2), .main__top > div:nth-child(4) {
+  border: 3px dotted #b4b4b4;
+}
+
+.main__plan--content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  top: 6%;
+  right: 8%;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  transition: all .1s;
+}
+
+.main__plan--content:hover {
+  transform: scale(1.05);
+  transition: all .1s ease-in;
+  cursor: pointer;
+}
+
+.plan__background--content {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  color: #fff;
+}
+
+#price {
+  font-size: 1.5rem;
+}
+
+#perMonth {
+  font-size: .75rem;
+}
+
+.plan__content--background {
+  background-image: linear-gradient(0deg, #fff 0% 0%, #c8b3f0 68%);
+  border-radius: 20px 20px 0 0;
+  background-size: cover;
+  flex: 3;
+  background-color: #fff;
+}
+
+.plan__content--footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  flex: 1;
+  border-radius: 0 0 20px 20px;
+  font-size: .8rem;
+}
+
+#background__content--hero {
+  margin-top: 30px;
+}
+
+#levelUp {
+  padding: 5px 15px;
+  color: #fff;
+  background-color: #000;
+  border-radius: 10px;
+}
+
+.main__bottom {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 3%;
+  height: 40%;
+}
+
+.main__bottom > div:first-child {
+  width: 48%;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.main__bottom > div:nth-child(2), .main__bottom > div:nth-child(3) {
+  width: 22%;
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 10px;
+}
+
+/*# sourceMappingURL=src_Components_Main_Main_b52d8e.css.map*/
