@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///Users/nicolas/IPI/dataviser/src/app/globals.css"],"sourcesContent":["/* Réinitialisation des marges et paddings */\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\n/* Suppression des décorations de liens */\na {\n  text-decoration: none;\n  color: inherit;\n}\n\n/* Suppression du style des listes */\nul, ol {\n  list-style: none;\n}"],"names":[],"mappings":"AACA;;;;;;AAOA;;;;;AAMA"}},
-    {"offset": {"line": 15, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

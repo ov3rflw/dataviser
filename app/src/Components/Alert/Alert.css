@@ -1,0 +1,29 @@
+.main__alerts {
+    display: flex;
+    flex-direction: column;
+}
+
+.main__alerts--top  {
+}
+
+.alerts__img--container {
+    background-color: rgb(230, 228, 228);
+    display: inline-flex;
+    justify-content: center;
+    border-radius: 50px;
+    padding: 5px;
+}
+
+.main__alerts--bottom {
+    border-top: 1px #d3d2d2 solid;
+    display: flex;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.main__alerts--bottom 
+    li {
+        padding: 10px 0 10px 0;
+        display: flex;
+        flex-direction: column;
+    }
