@@ -3,32 +3,13 @@
 import "./Alert.css";
 
 import Alerts from "../../../public/assets/alerts.svg"
+import useAlerts from "../../hooks/useAlert";
 
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
 import Image from "next/image";
 
 export default function Alert() {
 
-    const [alerts, setAlerts] = useState([]);
-    const [alertCount, setAlertCount] = useState(0);
-
-    useEffect(() => {
-
-        const socket = io("http://localhost:4000");
-
-        socket.on("alert", (data) => {
-
-        if (data && data.message && data.timestamp) {
-            setAlerts((prevAlerts) => [data, ...prevAlerts]);            
-            setAlertCount((prevCount) => prevCount + 1);
-        }
-        });
-
-        return () => {
-            socket.disconnect();
-        };
-    }, []);
+    const {alerts, alertCount} = useAlerts();
 
     return (
         <div className="main__alerts">

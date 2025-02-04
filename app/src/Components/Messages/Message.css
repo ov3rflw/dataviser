@@ -1,3 +1,35 @@
-.main__messages {
-    overflow:scroll;
+.main__messages{
+    display: flex;
+    flex-direction: column;
+}
+
+.messages__top--container {
+    background-color: rgb(230, 228, 228);
+    display: inline-flex;
+    justify-content: center;
+    border-radius: 50px;
+    padding: 5px;
+}
+
+.main__messages--bottom {
+    background-color: red;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    li {
+        padding: 10px 0 10px 0;
+    }
+}
+
+.main__messages.expanded {
+    z-index: 2;
+    animation: scaling 30s;
+}
+
+@keyframes scaling {
+    from {
+        background-color: blue;
+    }
+    to {
+        background-color: orange;
+    }
 }
