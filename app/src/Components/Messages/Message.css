@@ -80,14 +80,6 @@
     flex: 1;
 }
 
-.main__messages--tchatBox {
-    position: relative;
-    background-color: #f5f3f6;
-    ;
-    height: 100%;
-
-}
-
 /* .main__messages--bottom {
     position: relative;
     display: flex;

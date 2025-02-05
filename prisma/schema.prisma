@@ -11,9 +11,20 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  username String  @unique
-  email    String  @unique
-  password String
-  createdAt DateTime @default(now())
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  email    String @unique
+  messagesSent Message[] @relation("SentMessages")
+  messagesReceived Message[] @relation("ReceivedMessages")
+}
+
+model Message {
+  id         Int    @id @default(autoincrement())
+  senderId   Int
+  receiverId Int
+  message    String
+  timestamp  DateTime @default(now())
+
+  sender   User @relation("SentMessages", fields: [senderId], references: [id])
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }
