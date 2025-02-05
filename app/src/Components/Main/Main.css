@@ -51,6 +51,7 @@ header {
 }
 
 main {
+    position: relative;
     height: 100%;
     background-color: #f5f3f6;
 }
@@ -58,29 +59,54 @@ main {
 .main__top {
     display: flex;
     margin-top: 3%;
+    width: 100%;
     justify-content: space-between;
     height: 40%;
     font-family: "Poppins", serif;
 }
 
-.main__top > div:nth-child(1),
+.alert__wrapper, .messages__wrapper, .stats__wrapper {
+    width: 22%;
+    max-width: 22%;
+}
+
+.main__plan--wrapper{
+    width: 22%;
+    border-radius: 20px;
+}
+
+.messages__wrapper {
+}
+
+.alert__wrapper > div,
+.messages__wrapper > div,
+.alert__wrapper > div {
+    padding: 10px;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.alert__wrapper > div,
+.messages__wrapper > div,
+.main__plan--wrapper {
+    border:3px dotted #b4b4b4;
+}
+
+/* .main__top > div:nth-child(1),
 .main__top > div:nth-child(2),
 .main__top > div:nth-child(3) {
     padding: 10px;
     border-radius: 20px;
     width: 22%;
-}
-
-.main__top > div:nth-child(4){
-    width: 22%;
-    border-radius: 20px;
+    min-width: 22%;
 }
 
 .main__top > div:nth-child(1),
 .main__top > div:nth-child(2),
 .main__top > div:nth-child(4){
     border:3px dotted #b4b4b4;
-}
+} */
 
 .main__plan--content {
     position: relative;

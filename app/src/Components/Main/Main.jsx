@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import Alert from "../Alert/Alert";
-import Flux from "../Stats/Stats";
 import Tasks from "../Tasks/Tasks";
 import Messages from "../Messages/Message";
 import Plan from "../Plan/Plan";
@@ -30,9 +29,15 @@ export default function Main(){
             </header>
             <main>
                 <div className="main__top">
-                    <Alert />
-                    <Messages />
-                    <Stats />
+                    <div className="alert__wrapper">
+                        <Alert />
+                    </div>
+                    <div className="messages__wrapper">
+                        <Messages />
+                    </div>
+                    <div className="stats_wrapper">
+                        <Stats />
+                    </div>                    
                     <div className="main__plan--wrapper">
                         <Plan />
                     </div>
