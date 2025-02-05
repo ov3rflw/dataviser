@@ -35,7 +35,7 @@ export default function Main(){
                     <div className="messages__wrapper">
                         <Messages />
                     </div>
-                    <div className="stats_wrapper">
+                    <div className="stats__wrapper">
                         <Stats />
                     </div>                    
                     <div className="main__plan--wrapper">

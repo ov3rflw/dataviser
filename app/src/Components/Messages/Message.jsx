@@ -3,13 +3,16 @@
 import "./Message.css";
 import Message from "../../../public/assets/messages.svg";
 import Image from "next/image";
+
 import { motion } from "framer-motion";
+import { v4 as uuidv4 } from 'uuid';
 import useMessage from "../../hooks/useMessage";
 import { useState, useRef, useEffect } from "react";
 
 import Arrow from '../../../public/assets/arrow.svg';
 import ArrowRight from '../../../public/assets/arrow-right.svg';
 import Close from '../../../public/assets/close.svg';
+import Chatbox from "../ChatBox/Chatbox";
 
 export default function Messages() {
   const [ isExpanded, setIsExpanded] = useState(false);
@@ -45,12 +48,9 @@ export default function Messages() {
         isExpanded
           ? {
               position: isScale ? "fixed" : "absolute",
-              margin: "auto",
               top: 0,
               left: 0,
-              right: 0,
               bottom: 0,
-              marginBottom: isScale ? '' : "2%",
               borderRadius: isScale ? '0%' : '',
               border: 'none',
               zIndex: 6,
@@ -69,51 +69,65 @@ export default function Messages() {
       ref={cardRef}
     >
       <div className="main__messages--top">
-        <div className="messages_top--wrapper">
-          <div className="messages__top--container">
-            <Image src={Message} width={30} alt="message icon" />
+        <div className="messages__top--wrapper">
+          <div className="messages__left--wrapper">
+            <div className="messages__top--container">
+              <Image src={Message} width={30} alt="message icon" />
+            </div>
+            {messages.length > 0 ? (<h3>Messages</h3>) : ("")}
+            <p>1</p>
           </div>
-          <div className="message__top--button">
-              {
-              isExpanded ? (
-                <>
+          <div className="messages__right--wrapper">
+            <div className="message__top--button">
                 {
-                  isScale ? (
-                    <Image src={Arrow} alt="unscale icon" width={25} onClick={() => {setIsScale(false)}}/>
-                  ) : (
-                    <Image src={ArrowRight} alt="scale icon" width={25} onClick={() => {setIsScale(true)}}/>
-                  )
-                } 
-                  <Image src={Close} alt="close icon" width={25} onClick={(e) => { 
-                    e.stopPropagation();
-                    setIsExpanded(false); 
-                    setIsScale(false); 
-                    }} />
-                </>
-              ) :
-              ''
-            }
+                isExpanded ? (
+                  <>
+                  {
+                    isScale ? (
+                      <Image src={Arrow} alt="unscale icon" width={25} onClick={() => {setIsScale(false)}}/>
+                    ) : (
+                      <Image src={ArrowRight} alt="scale icon" width={25} onClick={() => {setIsScale(true)}}/>
+                    )
+                  } 
+                    <Image src={Close} alt="close icon" width={25} onClick={(e) => { 
+                      e.stopPropagation();
+                      setIsExpanded(false); 
+                      setIsScale(false); 
+                      }} />
+                  </>
+                ) :
+                ''
+              }
 
+            </div>
           </div>
         </div>
-        <h3>Nombre de messages</h3>
         <p></p>
       </div>
-      <div className="main__messages--bottom">
-        <ul className="main__messages--list">
-          {messages.length === 0 ? (
-            <li>
-              <p>Aucun message.</p>
-            </li>
-          ) : (
-            messages.map((message, index) => (
-              <li key={index}>
-                <p>{message.username}</p>
-                <p>{message.message}</p>
+      <div className="main__messages--bottom" style={{ flexDirection: isExpanded ? "" : ""}}>
+        <div className="main__messages--side">
+          <ul className={`main__messages--list`}>
+            {messages.length === 0 ? (
+              <li>
+                <p>Aucun message.</p>
               </li>
-            ))
-          )}
-        </ul>
+            ) : (
+              messages.map((message) => (
+                <li key={uuidv4()} className={`main__messages--content ${isExpanded ? 'flexColumn' : 'flexRow'}`}>
+                  <p>{new Date(message.timestamp).toLocaleString()}</p>
+                  <p>{message.profilePicture}</p>
+                  <p>{message.username}</p>
+                  <p>{message.message}</p>
+                </li>
+              ))
+            )}
+            </ul>
+        </div>
+        {isExpanded ? (
+          <Chatbox />
+        ) : (
+          ''
+        )}
       </div>
     </motion.div>
   );

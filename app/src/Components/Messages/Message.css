@@ -4,26 +4,27 @@
     flex-direction: column;
 }
 
-.messages_top--wrapper {
+.main__messages--top {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+}
+
+.messages__top--wrapper {
+    display: flex;
+}
+
+.messages__left--wrapper {
+    flex: 1;
+}
+
+.messages__right--wrapper {
+    display: flex;
 }
 
 .message__top--button {
     display: flex;
     height:fit-content;
-    width: 5%;
-    flex-direction: row-reverse;
     justify-content: space-around;
-
-    #rotate {
-        transform: rotate(190deg);
-    }
-}
-
-.messages__wrapper {
-    background-color: red;
-    max-height: 100% ;
 }
 
 .messages__top--container {
@@ -34,11 +35,89 @@
     padding: 5px;
 }
 
+
 .main__messages--bottom {
+    display: flex;
+    position: relative;
     overflow-y: scroll;
+    overflow-x:hidden;
+    border-top: 1px #d3d2d2 solid;
+    height: 100%;
+
+}
+
+.main__messages--hero {
+    position: relative;
+}
+
+.main__messages--list {
+    overflow-x: scroll;
+    flex: 1;
+}
+
+.main__messages--side {
+    position: relative;
+    display: flex;
+    flex: 1;
+}
+
+.main__messages--content {
+    padding: 10px 0 10px 0;
+    display: flex;
+}
+
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+
+    p {
+    }
+
+}
+
+.flexRow {
+    display: flex;
+    flex: 1;
+}
+
+.main__messages--tchatBox {
+    position: relative;
+    background-color: #f5f3f6;
+    ;
+    height: 100%;
+
+}
+
+/* .main__messages--bottom {
+    position: relative;
+    display: flex;
+    overflow-y: scroll;
+    background-color: red;
     overflow-x: hidden;
+    height: 100%;
+}
+
+.main__messages--hero {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: blue;
 }
 
 .main__messages--bottom li {
     padding: 10px 0 10px 0;
 }
+
+.main__messages--side {
+    position: relative;
+    display: flex;
+}
+
+.main__messages--list {
+    display: flex;  
+    flex-direction: column;
+}
+*/
