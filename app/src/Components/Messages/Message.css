@@ -80,6 +80,11 @@
     flex: 1;
 }
 
+
+img {
+    user-select: none;
+}
+
 /* .main__messages--bottom {
     position: relative;
     display: flex;

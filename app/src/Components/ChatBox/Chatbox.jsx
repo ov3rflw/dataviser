@@ -20,7 +20,8 @@ export default function Chatbox(){
         return () => newSocket.disconnect();
     },[])
     
-    const sendMessage = () => {
+    const sendMessage = (e) => {
+        e.preventDefault();
         if (message.trim() && socket) {
             socket.emit("sendMessage", { senderId: 1, message });
             setMessages((prevMessages) => [...prevMessages, { senderId: 1, message }]);
