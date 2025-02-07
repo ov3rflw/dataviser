@@ -12,21 +12,8 @@ datasource db {
 
 model User {
   id       Int    @id @default(autoincrement())
-  name String
+  firstName String
   lastname String
   email    String @unique
   password String
-  messagesSent Message[] @relation("SentMessages")
-  messagesReceived Message[] @relation("ReceivedMessages")
-}
-
-model Message {
-  id         Int    @id @default(autoincrement())
-  senderId   Int
-  receiverId Int
-  message    String
-  timestamp  DateTime @default(now())
-
-  sender   User @relation("SentMessages", fields: [senderId], references: [id])
-  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }
