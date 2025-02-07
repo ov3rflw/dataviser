@@ -3,10 +3,13 @@
 import { useEffect, useState } from "react";
 
 import "./Register.css";
-import Red from "../../../public/assets/red.jpg";
+import Apple from "../../../public/assets/apple.png";
 import City from "../../../public/assets/city.jpg";
-import Sky from "../../../public/assets/sky.jpg";
+import Google from "../../../public/assets/google.png";
 import Image from "next/image";
+import Red from "../../../public/assets/red.jpg";
+import Sky from "../../../public/assets/sky.jpg";
+
 
 export default function Register(){
     
@@ -32,7 +35,7 @@ export default function Register(){
     useEffect(() => {
         const interval =  setInterval(() => {
             setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageSrc.length)
-        }, 4000);
+        }, 15000);
 
         return() => clearInterval(interval);
 
@@ -110,6 +113,23 @@ export default function Register(){
                             <button type="submit">S'inscrire</button>
                         </div>
                     </form>
+                    <div className="registerComponenet__right--extra">
+                        <div className="registerComponent__separator">
+                            <span></span>
+                                <p id="registerComponent__right--text">Ou connectez-vous avec</p>
+                            <span></span>
+                        </div>
+                        <div className="registerComponent__extra--connexion">
+                            <div className="registerComponent__google">
+                                <Image src={Google} width={25} alt="google icon" />
+                                <p>Google</p>
+                            </div>
+                            <div className="registerComponent__apple">
+                                <Image src={Apple} width={25} alt="apple icon" />
+                                <p>Apple</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

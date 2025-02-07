@@ -38,6 +38,7 @@
                 background-color: rgba(249, 248, 248, 0.167);
                 padding: 10px 15px 10px 15px;
                 border-radius: 30px;
+                font-size: 0.8rem;
                 cursor: pointer;
                 user-select: none;
             }
@@ -107,6 +108,7 @@
                     a {
                         margin-left: 5px;
                         text-decoration:underline;
+                        color:#6d54b5;
                     }
                 }
             }
@@ -159,7 +161,7 @@
                         display: flex;
                         vertical-align: middle;
                         font-family: "Hubot Sans";
-                        margin-bottom: 5%;
+                        margin-bottom: 2%;
                         color: white;
 
                         input {
@@ -182,5 +184,61 @@
                 }
             }
         }   
+    }
+}
+
+
+.registerComponenet__right--extra {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center ;
+
+    .registerComponent__separator {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-top: 5%;
+      }
+      
+      .registerComponent__separator span {
+        flex-grow: 1;
+        height: 2px;
+        background-color: #888888;
+      }
+      
+      #registerComponent__right--text {
+        margin: 0 15px;
+        font-family: "Hubot Sans";
+        color: #888888;
+        white-space: nowrap; /* Pour éviter un retour à la ligne */
+      }
+      
+}
+
+.registerComponent__extra--connexion {
+    position: relative;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 5%;
+
+    div {
+        justify-content: center;
+        color: white;
+        font-family: "Hubot Sans";
+        font-size: 0.95rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        vertical-align: middle;
+        padding: 3% 15% 3% 15%;
+        border-radius: 10px;
+        border: 2px solid #6a6189;
+        cursor: pointer;
+
+        p {
+            margin-left: 5px;
+        }
     }
 }
