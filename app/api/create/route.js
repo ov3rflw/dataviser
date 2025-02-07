@@ -1,9 +1,6 @@
 import { SHA256 as sha256 } from "crypto-js";
 import { prisma } from "../../src/lib/prisma";
-import { Prisma } from "@prisma/client";
 import { NextResponse } from 'next/server';
-
-// Hash password utility function
 export const hashPassword = (string) => {
   return sha256(string).toString();
 };
@@ -12,44 +9,58 @@ export const hashPassword = (string) => {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { lastName, firstName, email, password } = body;
+    const { lastName, firstName, email, password, confirmPassword } = body;
 
-    // Validate password length
+    console.log(lastName,firstName,email,password,confirmPassword)
+    
+    if( !lastName || !firstName || !email || !password || !confirmPassword){
+      return NextResponse.json(
+        { errors: ["Veuillez compléter tous les champs."]},
+        { status: 400}
+      )
+    }
+    
     if (password.length < 6) {
       return NextResponse.json(
         { errors: ["Votre mot de passe doit faire plus de 6 caractères"] },
         { status: 400 }
       );
     }
-
-    // Create user in the database
-    const user = await prisma.user.create({
-      data: {
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        email: email.trim().toLowerCase(),
-        password: hashPassword(password),
-      },
-    });
-
-    // Return success response
-    return NextResponse.json({ user }, { status: 201 });
-  } catch (e) {
-    // Handle Prisma errors
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      if (e.code === "P2002") {
-        return NextResponse.json(
-          { message: "User with this email or username already exists" },
-          { status: 400 }
-        );
-      }
-      return NextResponse.json({ message: e.message }, { status: 400 });
+    
+    if(password == confirmPassword){
+      const hashedPassword = hashPassword(password)
+    } else {
+      return NextResponse.json(
+        {errors: "Les mots de passe ne sont pas les mêmes"},
+        {status: 400}
+      )
     }
+    
+    if(password == confirmPassword){
+      const hashedPassword = hashPassword(password);
 
-    // Handle other errors
-    return NextResponse.json(
-      { message: "Internal Server Error", },
-      { status: 500 }
-    );
+      await prisma.user.create({
+        data:{
+          lastName, firstName, hashedPassword, email
+        }
+      });
+
+      return NextResponse.json(
+        {status: 200},
+        {success: "Utilisateur créé"}
+      )
+
+    } else {
+      return NextResponse.json({
+        status: 400,
+        error: "Les mots de passe ne sont pas pareil."
+      })
+    }
+    
+  } catch(e) {
+    if(e.name == "PrismaClientKnownRequestError" && e.code == "P2002"){
+      return NextResponse.json("Cette adresse e-mail est déjà utilisée")
+    }
+    return NextResponse.json(e);
   }
 }

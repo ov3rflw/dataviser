@@ -19,18 +19,16 @@ export default function Register(){
     const [confirmPassword, setConfirmPassword] = useState("");
     const [email, setEmail] = useState("");
     const [passError, setPassError] = useState(false);
-    const [termCondition, setTermCondition] = useState(false);
+    const [termCondition, setTermCondition] = useState(
+        {status: "Veuillez accepter les conditions d'utilisations", cond: false}
+    );
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    
+
     const imageSrc = [
         {src: Sky, alt: "sky image", text:"Monitoring threats, safeguarding success."},
         {src: Red, alt:"red image", text:"The eye of the IDS, ever watchful, hunts the ghosts of the network."},
         {src: City, alt:"city image", text:"Real-time detection, proactive protection."}
     ];
-
-    useEffect(() => {
-        validatePassword(password, confirmPassword);
-    },[password, confirmPassword]);
 
     useEffect(() => {
         const interval =  setInterval(() => {
@@ -41,35 +39,46 @@ export default function Register(){
 
     }, []);
     
-    function validatePassword(pass, confirmPass){
-        let isValid = confirmPass === pass;
-        if(!isValid) {
-            setPassError(true);
-        };
-    };
+    
 
     async function handleSubmit(e){
         e.preventDefault();
-        let userData = {
-            firstName,
-            lastName,
-            email,
-            password
-        };
+        // upgrade cette vérification plus tard
 
-        const res = await fetch("http://localhost:3000/api/create", {
-            method: "POST",
-            body: JSON.stringify(userData),
-            headers: {
-                "Content-Type":"application/json",
-            },
-        });
-
-        if (res.ok){
-            const data = await res.json();
+        if(termCondition){
+            let userData = {
+                firstName,
+                lastName,
+                email,
+                password,
+                confirmPassword
+            };
+    
+            const res = await fetch("http://localhost:3000/api/create", {
+                method: "POST",
+                body: JSON.stringify(userData),
+                headers: {
+                    "Content-Type":"application/json",
+                },
+            });
+    
+            if (res.ok){
+                const data = await res.json();
+            } else {
+                return null;
+            }
         } else {
-            return null;
+            console.log("veuillez accepter les conditions")
         }
+        
+    };
+
+    const handleCheckboxChange = (event) => {
+        const isChecked = event.target.checked; // Vérifie si la checkbox est cochée
+        setTermCondition({
+            status: isChecked ? "Conditions d'utilisations acceptées" : "Veuillez accepter les conditions d'utilisations",
+            cond: isChecked
+        });
     };
 
     return(
@@ -107,8 +116,8 @@ export default function Register(){
                             <input type="password" placeholder="Mot de passe" onChange={(e) => setPassword(e.target.value)}/>
                             <input type="password" placeholder="Confirmer le mot de passe" onChange={(e) => setConfirmPassword(e.target.value)} />
                             <div className="userCondition">
-                                <input type="checkbox" />
-                                <p>J'accepte les conditions d'utilisations</p>
+                                <input type="checkbox" checked={termCondition.cond} onChange={handleCheckboxChange}/>
+                                <p>J'accepte les <a href="#">conditions d'utilisations</a></p>
                             </div>
                             <button type="submit">S'inscrire</button>
                         </div>
