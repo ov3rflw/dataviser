@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { useRouter } from 'next/navigation';
+
 import "./Register.css";
 import Apple from "../../../public/assets/apple.png";
 import City from "../../../public/assets/city.jpg";
@@ -9,6 +11,7 @@ import Google from "../../../public/assets/google.png";
 import Image from "next/image";
 import Red from "../../../public/assets/red.jpg";
 import Sky from "../../../public/assets/sky.jpg";
+import { redirect } from "next/dist/server/api-utils";
 
 
 export default function Register(){
@@ -23,6 +26,8 @@ export default function Register(){
         {status: "Veuillez accepter les conditions d'utilisations", cond: false}
     );
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const router = useRouter();
 
     const imageSrc = [
         {src: Sky, alt: "sky image", text:"Monitoring threats, safeguarding success."},
@@ -60,13 +65,12 @@ export default function Register(){
                 headers: {
                     "Content-Type":"application/json",
                 },
-            });
-    
-            if (res.ok){
-                const data = await res.json();
-            } else {
-                return null;
+            })
+
+            if(res.status == 200){
+                router.push('/');
             }
+
         } else {
             console.log("veuillez accepter les conditions")
         }

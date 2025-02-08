@@ -52,7 +52,8 @@ export async function POST(request) {
             }
         });
 
-        return NextResponse.json({status: 200},{response: "Utilisateur créé"})
+        return NextResponse.redirect(new URL('/', request.url));
+
 
     } else {
         return NextResponse.json({errors:["Les mots de passe ne sont pas identiques."]},{status: 400})
