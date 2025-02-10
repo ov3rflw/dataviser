@@ -7,8 +7,6 @@ export default function useMessage(){
 
     const socket = io("http://localhost:4000/")
 
-    console.log(messages);
-
     useEffect(() => {
         socket.on("message", (newMessage) => {
             setMessages((prevMessage) => [...prevMessage, newMessage])

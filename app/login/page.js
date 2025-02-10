@@ -1,7 +1,7 @@
-import Login from "../src/Components/Login/Login";
+import AuthForm from "../src/Components/AuthForm/AuthForm";
 
 export default function Page(){
     return(
-        <Login />
+        <AuthForm />
     )
 }

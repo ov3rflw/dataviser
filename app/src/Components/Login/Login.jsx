@@ -16,8 +16,6 @@ export default function Login(){
     async function handleSubmit (e) {
         e.preventDefault();
 
-        console.log(errors);
-
         let userData = {
             email: email,
             hashedPassword: password,

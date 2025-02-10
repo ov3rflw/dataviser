@@ -1,4 +1,4 @@
-import LineChart from "../../../features/LineChart";
+import LineChart from "../../lib/features/LineChart";
 import "./Stats.css"
 
 export default function Stats(){

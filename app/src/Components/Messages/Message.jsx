@@ -30,8 +30,6 @@ export default function Messages() {
 
     document.addEventListener("mousedown", handleClickOutside);
 
-    console.log(messages.length)
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };

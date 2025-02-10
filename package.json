@@ -17,6 +17,8 @@
     "cookie": "^1.0.2",
     "crypto-js": "^4.2.0",
     "framer-motion": "^12.1.0",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
