@@ -15,6 +15,8 @@ export async function POST(request) {
         },
       });
 
+    let hashedPassword;
+
     if(emailIsValid == null){
         return NextResponse.json(
             {errors: ["Veuillez vérifier votre adresse-email"]},
@@ -44,16 +46,20 @@ export async function POST(request) {
     }
     
     if(password == confirmPassword){
-        const hashedPassword = hashPassword(password)
-            
+        await hashPassword(password)
+        .then((e) => {
+          hashedPassword = e;
+        })
+
+        console.log(hashPassword);
+
         const newUser = await prisma.user.create({
             data:{
                 lastName, firstName, hashedPassword:hashedPassword, email
             }
         });
 
-        return NextResponse.redirect(new URL('/', request.url));
-
+        return NextResponse.json({status: 200, message:["Utilisateur créé !"]})
 
     } else {
         return NextResponse.json({errors:["Les mots de passe ne sont pas identiques."]},{status: 400})

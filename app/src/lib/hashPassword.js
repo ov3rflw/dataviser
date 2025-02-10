@@ -1,5 +1,5 @@
-import { SHA256 as sha256 } from "crypto-js";
+import bcrypt from 'bcryptjs';
 
 export const hashPassword = (string) => {
-    return sha256(string).toString();
+    return bcrypt.hash(string, 10);
 };

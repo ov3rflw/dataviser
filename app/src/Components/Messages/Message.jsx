@@ -17,9 +17,6 @@ import Chatbox from "../ChatBox/Chatbox";
 export default function Messages() {
   const [ isExpanded, setIsExpanded] = useState(false);
   const [ isScale, setIsScale ] = useState(false);
-
-  console.log(isExpanded)
-
   const cardRef = useRef();
   const { messages } = useMessage(null);
 
@@ -32,6 +29,8 @@ export default function Messages() {
     }
 
     document.addEventListener("mousedown", handleClickOutside);
+
+    console.log(messages.length)
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -74,8 +73,8 @@ export default function Messages() {
             <div className="messages__top--container">
               <Image src={Message} width={30} alt="message icon" />
             </div>
-            {messages.length > 0 ? (<h3>Messages</h3>) : ("")}
-            <p>1</p>
+            <h3>Nombre de messages</h3>
+            <p>{messages.length}</p>
           </div>
           <div className="messages__right--wrapper">
             <div className="message__top--button">

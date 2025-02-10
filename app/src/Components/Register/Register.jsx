@@ -11,8 +11,6 @@ import Google from "../../../public/assets/google.png";
 import Image from "next/image";
 import Red from "../../../public/assets/red.jpg";
 import Sky from "../../../public/assets/sky.jpg";
-import { redirect } from "next/dist/server/api-utils";
-
 
 export default function Register(){
     
@@ -21,7 +19,6 @@ export default function Register(){
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [passError, setPassError] = useState(false);
     const [termCondition, setTermCondition] = useState(
         {status: "Veuillez accepter les conditions d'utilisations", cond: false}
     );
