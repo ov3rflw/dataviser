@@ -1,0 +1,43 @@
+.loginComponent__right {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    .loginComponent__right--wrapper {
+        width: fit-content;
+        height: fit-content;
+    form {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin-top: 20px;
+
+            input {
+                padding: 10px;
+                margin-inline: 5px;
+                border-radius: 7px;
+                outline: none;
+                border:none;
+                background-color: #3c364c;
+                color: white;
+                border: 2px solid #3c364c;
+            }
+
+            input:focus {
+                border: 2px solid #6a6189;
+            }
+
+            button {
+                background-color: #6d54b5;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                padding: 10px;
+                
+            }
+        }
+    }
+}

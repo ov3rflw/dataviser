@@ -1,190 +1,105 @@
 @import url('https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-.registerComponent {
-    position: relative;
+.registerComponent__right {
     display: flex;
-    height: 100vh;
-    padding: 1%;
-    background-color: #2b2538;
+    flex: 1;
+    justify-content: center;
 
-    .registerComponent__left {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        flex: 1;
+    .registerComponent__right--wrapper {
+        height: fit-content;
+        width: fit-content;
 
-        .registerComponent__left--top{
-            position: absolute;
-            margin-top: 3%;
-            vertical-align: middle;
+        .registerComponent__right--hero {
             color: white;
-            top: 0;
-            align-items: center;
-            z-index: 2;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
 
             h1 {
-                margin-left: 5%;
                 font-family: "Hubot Sans";
+                margin-bottom: 5px;
             }
 
             p {
-                margin-right: 5%;
                 font-family: "Poppins";
-                background-color: rgba(249, 248, 248, 0.167);
-                padding: 10px 15px 10px 15px;
-                border-radius: 30px;
-                font-size: 0.8rem;
-                cursor: pointer;
-                user-select: none;
+
+                a {
+                    margin-left: 5px;
+                    text-decoration:underline;
+                    color:#6d54b5;
+                }
             }
         }
 
-        .registerComponent__left--bottom {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            background-color: blue;
-            z-index: 4;
-            
-            h2 {
-                position: absolute;
-                color: white;
-                font-family: "Hubot Sans";
-                bottom: 0;
-                z-index: 2;
-                margin-bottom: 15%;
-                text-wrap:wrap;
-                text-align: center;
-                
+        form {
+            .registerComponent__right--top {
+                display: flex;
+                margin-top: 20px;
+
+                input:nth-child(1) { /* margin between lastName -> firstName */
+                    margin-inline-end: 20px;
+                }
+
+                input {
+                    padding: 10px;
+                    margin-bottom: 20px;
+                    border-radius: 7px;
+                    outline: none;
+                    border:none;
+                    background-color: #3c364c;
+                    color: white;
+                    border: 2px solid #3c364c;
+                }
+
+                input:focus {
+                    border: 2px solid #6a6189;
+                }
             }
-        }
 
-    }
+            .registerComponent__right--footer {
+                display: flex;
+                flex-direction: column;
 
-    .registerComponent__image--wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-    
-    .registerComponent__image--wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 20px;
-        user-select: none;
-        -webkit-user-drag: none;
-    }
-    
-    
-    .registerComponent__right {
-        display: flex;
-        flex: 1;
-        justify-content: center;
+                input {
+                    padding: 10px;
+                    border-radius: 7px;
+                    margin-bottom: 20px;
+                    outline: none;
+                    background-color: #3c364c;
+                    color: white;
+                    border: 2px solid #3c364c;
+                }
 
-        .registerComponent__right--wrapper {
-            margin-top: 12%;
-            height: fit-content;
-            width: fit-content;
 
-            .registerComponent__right--hero {
-                color: white;
+                input:focus {
+                    border: 2px solid #6a6189;
+                }
 
-                h1 {
+                .userCondition {
+                    display: flex;
+                    vertical-align: middle;
                     font-family: "Hubot Sans";
-                    margin-bottom: 5px;
-                }
-
-                p {
-                    font-family: "Poppins";
-
-                    a {
-                        margin-left: 5px;
-                        text-decoration:underline;
-                        color:#6d54b5;
-                    }
-                }
-            }
-
-            form {
-                .registerComponent__right--top {
-                    display: flex;
-                    margin-top: 20px;
-
-                    input:nth-child(1) { /* margin between lastName -> firstName */
-                        margin-inline-end: 20px;
-                    }
+                    margin-bottom: 2%;
+                    color: white;
 
                     input {
-                        padding: 10px;
-                        margin-bottom: 20px;
-                        border-radius: 7px;
-                        outline: none;
-                        border:none;
-                        background-color: #3c364c;
-                        color: white;
-                        border: 2px solid #3c364c;
-                    }
-
-                    input:focus {
-                        border: 2px solid #6a6189;
+                        margin-right: 10px;
+                        margin-top: 4px;
+                        width: 15px;
+                        height: 15px;
                     }
                 }
 
-                .registerComponent__right--footer {
-                    display: flex;
-                    flex-direction: column;
-
-                    input {
-                        padding: 10px;
-                        border-radius: 7px;
-                        margin-bottom: 20px;
-                        outline: none;
-                        background-color: #3c364c;
-                        color: white;
-                        border: 2px solid #3c364c;
-                    }
-
-
-                    input:focus {
-                        border: 2px solid #6a6189;
-                    }
-
-                    .userCondition {
-                        display: flex;
-                        vertical-align: middle;
-                        font-family: "Hubot Sans";
-                        margin-bottom: 2%;
-                        color: white;
-
-                        input {
-                            margin-right: 10px;
-                            margin-top: 4px;
-                            width: 15px;
-                            height: 15px;
-                        }
-                    }
-
-                    button {
-                        background-color: #6d54b5;
-                        padding: 20px 15px 20px 15px;
-                        color: white;
-                        border: none;
-                        border-radius: 10px;
-                        cursor: pointer;
-                        font-size: 1.1rem;
-                    }
+                button {
+                    background-color: #6d54b5;
+                    padding: 20px 15px 20px 15px;
+                    color: white;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    font-size: 1.1rem;
                 }
             }
-        }   
-    }
+        }
+    }   
 }
 
 

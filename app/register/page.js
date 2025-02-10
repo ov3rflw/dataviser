@@ -1,7 +1,7 @@
-import Register from "../src/Components/Register/Register";
+import AuthForm from "../src/Components/AuthForm/AuthForm";
 
 export default function Page(){
     return(
-        <Register />
+        <AuthForm />
     )
 }
