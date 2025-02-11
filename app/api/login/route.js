@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../src/lib/prisma";
 import { hashCompare } from "../../src/lib/hashCompare";
-import jwt from "jsonwebtoken";
+import { SignJWT } from "jose";
 
 export async function POST(request) {
     try {
@@ -35,9 +35,13 @@ export async function POST(request) {
             );
         }
 
-        const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {
-            expiresIn:"1m",
-        })
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET)
+
+        const signToken = await new SignJWT({userId: user.id})
+        .setProtectedHeader({alg: 'HS256'})
+        .setIssuedAt()
+        .setExpirationTime('30d')
+        .sign(secret)
 
         const response =  NextResponse.json(
             { message: "Connexion réussie"},
@@ -46,7 +50,7 @@ export async function POST(request) {
 
         response.headers.set(
             "Set-Cookie",
-            `token=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=3600`
+            `token=${signToken}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=3600`
         );
         
         return response;

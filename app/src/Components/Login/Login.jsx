@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+
 
 import "./Login.css";
+
 
 export default function Login(){
 
@@ -12,6 +15,7 @@ export default function Login(){
     const [errors, setErrors] = useState([]);
     const inputPasswordRef = useRef();
     const inputEmailRef = useRef();
+    const router = useRouter();
 
     async function handleSubmit (e) {
         e.preventDefault();
@@ -47,10 +51,8 @@ export default function Login(){
             if(!res.ok){
                 setErrors(data.message)
             } else {
-                setErrors("")
+                router.push('/dashboard', );
             }
-            
-
         } 
     }
 
