@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import { clearCookies } from "../../lib/clearCookies";
 
 import "./Navbar.css";
 
@@ -12,6 +10,9 @@ import Logs from '../../../public/assets/logs.svg';
 import Network from '../../../public/assets/network.svg';
 import Settings from '../../../public/assets/settings.svg';
 import Stats from '../../../public/assets/monitoring.svg';
+
+import Image from "next/image";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
