@@ -38,7 +38,7 @@ export default function Login(){
         }
 
         if(password && email){
-            const res = await fetch("http://localhost:3000/api/login", {
+            const res = await fetch("http://localhost:3000/api/auth/login", {
                 method:"POST",
                 body: JSON.stringify(userData),
                 headers:{
@@ -51,7 +51,7 @@ export default function Login(){
             if(!res.ok){
                 setErrors(data.message)
             } else {
-                router.push('/dashboard', );
+                router.push('/dashboard');
             }
         } 
     }

@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { clearCookies } from "../../lib/clearCookies";
 
 import "./Navbar.css";
 
@@ -9,8 +12,28 @@ import Logs from '../../../public/assets/logs.svg';
 import Network from '../../../public/assets/network.svg';
 import Settings from '../../../public/assets/settings.svg';
 import Stats from '../../../public/assets/monitoring.svg';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar(){
+
+    const [ isLogout, setIsLogout ] = useState(false)
+    const router = useRouter();
+
+    async function handleClick() {
+        await fetch("/api/auth/logout", {
+            method:"GET"
+        })
+        .then((response) => {
+            if(response.ok){
+                setIsLogout(true);
+                router.push('/login');
+            } else {
+                console.log("Status error : ", response.status);
+            }
+        })
+    }
+
     return(
         <nav>
             <div id="nav__title">
@@ -67,9 +90,9 @@ export default function Navbar(){
             </ul>
             <ul id="nav__bottom">
                 <li id="nav__bottom--logout">
-                    <a href="">
+                    <p onClick={handleClick}>
                         Se déconnecter
-                    </a>
+                    </p>
                 </li>
             </ul>
         </nav>

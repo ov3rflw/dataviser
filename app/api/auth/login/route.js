@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { prisma } from "../../src/lib/prisma";
-import { hashCompare } from "../../src/lib/hashCompare";
+import { prisma } from "../../../src/lib/prisma";
 import { SignJWT } from "jose";
+import { hashCompare } from "../../../src/lib/hashCompare";
 
 export async function POST(request) {
     try {
