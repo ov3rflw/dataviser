@@ -5,8 +5,6 @@ import Message from "../../../public/assets/messages.svg";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
-import { v4 as uuidv4 } from 'uuid';
-import useMessage from "../../hooks/useMessage";
 import { useState, useRef, useEffect } from "react";
 
 import Arrow from '../../../public/assets/arrow.svg';
@@ -15,10 +13,12 @@ import Close from '../../../public/assets/close.svg';
 import Chatbox from "../ChatBox/Chatbox";
 
 export default function Messages() {
+  const [ messages, setMessages ] = useState([]);
   const [ isExpanded, setIsExpanded] = useState(false);
   const [ isScale, setIsScale ] = useState(false);
+  
   const cardRef = useRef();
-  const { messages } = useMessage(null);
+
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -34,6 +34,7 @@ export default function Messages() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
 
   return (
     <motion.div
@@ -108,20 +109,11 @@ export default function Messages() {
               <li>
                 <p>Aucun message.</p>
               </li>
-            ) : (
-              messages.map((message) => (
-                <li key={uuidv4()} className={`main__messages--content ${isExpanded ? 'flexColumn' : 'flexRow'}`}>
-                  <p>{new Date(message.timestamp).toLocaleString()}</p>
-                  <p>{message.profilePicture}</p>
-                  <p>{message.username}</p>
-                  <p>{message.message}</p>
-                </li>
-              ))
-            )}
-            </ul>
+            ): ('')}
+          </ul>
         </div>
         {isExpanded ? (
-          <Chatbox />
+          <Chatbox userId={2} receiverId={2}/>
         ) : (
           ''
         )}

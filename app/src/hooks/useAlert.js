@@ -8,7 +8,7 @@ export default function useAlerts(){
 
     useEffect(() => {
 
-        const socket = io("http://localhost:4000");
+        const socket = io("http://localhost:3001");
 
         socket.on("alert", (data) => {
 

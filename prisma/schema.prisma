@@ -14,13 +14,20 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  lastName String
-  firstName String
-  email String? @unique
+  id          Int        @id @default(autoincrement())
+  lastName    String
+  firstName   String
+  email       String?    @unique
   emailVerified DateTime?
   hashedPassword String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
+model Message {
+  id         Int      @id @default(autoincrement())
+  senderId   Int
+  receiverId Int
+  content    String
+  createdAt  DateTime @default(now())
+}

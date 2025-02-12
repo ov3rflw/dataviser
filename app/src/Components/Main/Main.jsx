@@ -20,10 +20,10 @@ export default function Main(){
                         <h2>Tableau de bord</h2>
                     </div>
                     <div className="header__top--profile">
-                        <div className="addimg__wrapper">
+                        <div className="addimg__wrapper" >
                             <Image src={Add} alt="add icon" width={25} className="add_icon"/>
                         </div>
-                        <Image src={Test} alt="test" width={45} className="test"/>
+                        <Image src={Test} alt="test" width={45} className="test" style={{cursor: "pointer"}}/>
                     </div>
                 </div>
             </header>
