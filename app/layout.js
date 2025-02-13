@@ -1,5 +1,4 @@
 import "./globals.css";
-import StoreProvider from "./store/StoreProvider";
 
 export const metadata = {
   title: "dataviser://",

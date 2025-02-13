@@ -15,7 +15,8 @@ export async function middleware(request, response) {
       const userId = token.payload.userId
       const response = NextResponse.next();
       response.headers.set('x-user-id', userId);
-      return NextResponse.next();
+      console.log(response);
+      return response;
     } catch (e) {
       console.log(e);
     }
@@ -52,5 +53,5 @@ export async function middleware(request, response) {
 
 // export config pour que le middleware soit actif sur ces endpoints
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/register"],
+  matcher: ["/dashboard/:path*", "/login", "/register", "/api/:path*"],
 };

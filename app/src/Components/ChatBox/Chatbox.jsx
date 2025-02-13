@@ -10,24 +10,31 @@ const socket = io('http://localhost:3001');
 export default function Chatbox({ userId, receiverId }) {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [tokenId, setTokenId] = useState(null); //récupérer l'id de l'utilisateur
     
-    // Écouter les messages
     useEffect(() => {
-        // Charger les anciens messages
+        // charger les anciens messages
         loadMessages();
 
-        // Écouter les nouveaux messages
+        const response = fetch('/api/userId', {
+            method:"GET",
+        })
+        .then((res) => {
+            setTokenId(res.headers.get("x-user-id"));
+        })
+
+        // écouter les nouveaux messages
         socket.on('message', newMessage => {
             setMessages(oldMessages => [...oldMessages, newMessage]);
         });
 
-        // Nettoyer à la fin
+        // nettoyer à la fin
         return () => {
             socket.off('message');
         };
     }, []);
 
-    // Charger les messages
+    // charger les messages
     const loadMessages = async () => {
         try {
             const res = await fetch(`/api/messages?userId=${userId}&receiverId=${receiverId}`);
@@ -40,7 +47,7 @@ export default function Chatbox({ userId, receiverId }) {
         }
     };
 
-    // Envoyer un message
+    // envoyer un message
     const sendMessage = async (e) => {
         e.preventDefault();
 
@@ -53,9 +60,7 @@ export default function Chatbox({ userId, receiverId }) {
         };
 
         try {
-            // Envoyer à l'API
-            console.log("Message :", messageData)
-
+            // envoyer à l'API
             const res = await fetch('/api/messages', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -63,9 +68,8 @@ export default function Chatbox({ userId, receiverId }) {
             });
 
             if (res.ok) {
-                // Envoyer au WebSocket
+                // envoyer au WebSocket
                 socket.emit('message', messageData);
-                // Vider le champ
                 setMessage('');
             }
         } catch (error) {
@@ -74,7 +78,7 @@ export default function Chatbox({ userId, receiverId }) {
     };
 
     return (
-        <div>
+        <div style={{backgroundColor:"red"}}>
             <div>
                 {messages.map((msg, index) => (
                     <p key={index}>

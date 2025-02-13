@@ -113,7 +113,7 @@ export default function Messages() {
           </ul>
         </div>
         {isExpanded ? (
-          <Chatbox userId={2} receiverId={2}/>
+          <Chatbox userId={1} receiverId={1}/>
         ) : (
           ''
         )}
