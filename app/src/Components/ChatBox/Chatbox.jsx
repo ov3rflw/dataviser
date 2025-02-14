@@ -28,6 +28,12 @@ export default function Chatbox({ senderId }) {
         };
     }, []);
 
+    useEffect(() => {
+        if (lastMessage.current) {
+            lastMessage.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messages]);
+
     const loadMessages = async (receiverId) => {
         try {
             const res = await fetch(`/api/messages?userId=${senderId}&receiverId=${receiverId}`);
@@ -111,7 +117,7 @@ export default function Chatbox({ senderId }) {
             <div className="Chatbox__component--right">
                 <div className="Chatbox__component--messages">
                     {messages.map((msg, index) => (
-                        <p key={`${index}-${uuidv4()}`}>
+                        <p key={`${index}-${uuidv4()}`} ref={index === messages.length - 1 ? lastMessage : null}>
                             <b>{msg.senderId == senderId ? 'Moi: ' : `${getUserName(msg.senderId)}: `}</b>
                             {msg.content}
                         </p>
