@@ -1,5 +1,3 @@
-/* Dans votre fichier Chatbox.css */
-
 .Chatbox__component {
     display: flex;
     width: 100%;
@@ -36,7 +34,6 @@
 
 .Chatbox__component--right .Chatbox__component--messages .Chatbox__component--content li {
     list-style-type: none;
-    /* Supprime les puces par défaut des éléments de liste */
 }
 
 .Chatbox__component--right .Chatbox__component--messages .Chatbox__component--content li .Chatbox__component--userTime {
@@ -82,11 +79,9 @@
     height: fit-content;
 }
 
-/* Styles pour les messages */
 .message--left {
     text-align: left;
     margin-right: auto;
-    /* Couleur de fond pour les messages de l'ami */
     border-radius: 10px 10px 10px 0;
     width: fit-content;
     color: white;
@@ -95,7 +90,6 @@
 
     .Chatbox__component--message {
         background-color: rgb(206, 204, 204);
-        /* Couleur de fond pour vos messages */
         border-radius: 10px;
         width: fit-content;
 
@@ -113,7 +107,6 @@
 
     .Chatbox__component--message {
         background-color: rgb(71, 71, 246);
-        /* Couleur de fond pour vos messages */
         border-radius: 10px;
         width: fit-content;
 
@@ -122,4 +115,54 @@
 
 .timestamp {
     color: grey;
+}
+
+/* Dans votre fichier Chatbox.css */
+
+.Chatbox__component--sender {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.Chatbox__component--sender form {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.Chatbox__component--sender .inputMessage {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.Chatbox__component--sender .inputMessage input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.Chatbox__component--sender .sendButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.Chatbox__component--sender .sendButton:hover {
+    background-color: #0056b3;
 }

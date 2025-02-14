@@ -123,7 +123,7 @@ export default function Chatbox({ senderId }) {
                             >
                                 <div className="Chatbox__component--messageHeader">
                                     <p className="timestamp">
-                                        {new Date(msg.createdAt).toLocaleTimeString()}
+                                        {new Date(msg.createdAt).toLocaleTimeString() == "Invalid Date" ? new Date().toLocaleTimeString() : new Date(msg.createdAt).toLocaleTimeString()}
                                     </p>
                                 </div>
                                 <div className="Chatbox__component--message">
@@ -147,7 +147,7 @@ export default function Chatbox({ senderId }) {
                                 placeholder="Votre message"
                             />
                         </div>
-                        <button type="submit">Envoyer</button>
+                        <button className="sendButton" type="submit">Envoyer</button>
                     </form>
                 </div>
             </div>
