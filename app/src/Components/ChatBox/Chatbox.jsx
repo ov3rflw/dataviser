@@ -1,27 +1,21 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-
-
+import { useState, useEffect, useRef } from 'react';
+import "./Chatbox.css";
 import io from 'socket.io-client';
+import { v4 as uuidv4 } from 'uuid';
 
 const socket = io('http://localhost:3001');
 
-export default function Chatbox({ userId, receiverId }) {
+export default function Chatbox({ senderId }) {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
-    const [tokenId, setTokenId] = useState(null); //récupérer l'id de l'utilisateur
-    
-    useEffect(() => {
-        // charger les anciens messages
-        loadMessages();
+    const [receiverId, setReceiverId] = useState(null);
+    const [userList, setUserList] = useState([]);
+    const lastMessage = useRef();
 
-        const response = fetch('/api/userId', {
-            method:"GET",
-        })
-        .then((res) => {
-            setTokenId(res.headers.get("x-user-id"));
-        })
+    console.log(senderId);
+
+    useEffect(() => {
+        loadUsers();
 
         // écouter les nouveaux messages
         socket.on('message', newMessage => {
@@ -34,20 +28,31 @@ export default function Chatbox({ userId, receiverId }) {
         };
     }, []);
 
-    // charger les messages
-    const loadMessages = async () => {
+    const loadMessages = async (receiverId) => {
         try {
-            const res = await fetch(`/api/messages?userId=${userId}&receiverId=${receiverId}`);
+            const res = await fetch(`/api/messages?userId=${senderId}&receiverId=${receiverId}`);
             const data = await res.json();
             if (Array.isArray(data)) {
                 setMessages(data);
             }
+
+            console.log(data);
         } catch (error) {
             console.error('Erreur chargement messages:', error);
         }
     };
 
-    // envoyer un message
+    const loadUsers = async () => {
+        try {
+            const res = await fetch('/api/userList');
+            const users = await res.json();
+            console.log('Users data:', users); // Vérifiez la structure des données ici
+            setUserList(users.getUsers);
+        } catch (error) {
+            console.error('Erreur chargement des utilisateurs:', error);
+        }
+    };
+
     const sendMessage = async (e) => {
         e.preventDefault();
 
@@ -55,49 +60,77 @@ export default function Chatbox({ userId, receiverId }) {
 
         const messageData = {
             content: message,
-            senderId: userId,
+            senderId: senderId,
             receiverId: receiverId
         };
 
         try {
-            // envoyer à l'API
-            const res = await fetch('/api/messages', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(messageData)
-            });
+            if (receiverId) {
+                const res = await fetch('/api/messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(messageData)
+                });
 
-            if (res.ok) {
-                // envoyer au WebSocket
-                socket.emit('message', messageData);
-                setMessage('');
+                if (res.ok) {
+                    socket.emit('message', messageData);
+                    setMessage('');
+                }
             }
         } catch (error) {
             console.error('Erreur envoi message:', error);
         }
     };
 
+    const getReceiverId = (e) => {
+        const friendId = e.target.getAttribute('data-id');
+        setReceiverId(friendId);
+        loadMessages(friendId);
+    };
+
+    const getUserName = (senderId) => {
+        const user = userList.find(user => user.id == senderId);
+        return user ? `${user.firstName} ${user.lastName}` : 'Utilisateur inconnu';
+    };
+
+
     return (
-        <div style={{backgroundColor:"red"}}>
-            <div>
-                {messages.map((msg, index) => (
-                    <p key={index}>
-                        <b>{msg.senderId === userId ? 'Moi:' : 'Autre:'}</b>
-                        {msg.content}
-                    </p>
-                ))}
+        <div className="Chatbox__component">
+            <div className="Chatbox__left--friendList">
+                <ul>
+                    {userList.map((user) => (
+                        <li key={user.id} onClick={getReceiverId} style={{ cursor: "pointer" }}>
+                            <p data-id={user.id}>
+                                {user.firstName} {user.lastName}
+                            </p>
+                        </li>
+                    ))}
+                </ul>
             </div>
 
-            <form onSubmit={sendMessage}>
-                <input
-                    type="text"
-                    value={message}
-                    onChange={e => setMessage(e.target.value)}
-                    placeholder="Votre message"
-                />
-                <button type="submit">Envoyer</button>
-            </form>
-        </div>
-    );
-}
+            <div className="Chatbox__component--right">
+                <div className="Chatbox__component--messages">
+                    {messages.map((msg, index) => (
+                        <p key={`${index}-${uuidv4()}`}>
+                            <b>{msg.senderId == senderId ? 'Moi: ' : `${getUserName(msg.senderId)}: `}</b>
+                            {msg.content}
+                        </p>
+                    ))}
+                </div>
 
+                <div className="Chatbox__component--sender">
+                    <form onSubmit={sendMessage}>
+                        <div className="inputMessage">
+                            <input
+                                type="text"
+                                value={message}
+                                onChange={e => setMessage(e.target.value)}
+                                placeholder="Votre message"
+                            />
+                        </div>
+                        <button type="submit">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    )};

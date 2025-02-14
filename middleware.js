@@ -15,7 +15,6 @@ export async function middleware(request, response) {
       const userId = token.payload.userId
       const response = NextResponse.next();
       response.headers.set('x-user-id', userId);
-      console.log(response);
       return response;
     } catch (e) {
       console.log(e);

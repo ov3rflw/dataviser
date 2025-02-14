@@ -13,12 +13,12 @@ import Close from '../../../public/assets/close.svg';
 import Chatbox from "../ChatBox/Chatbox";
 
 export default function Messages() {
-  const [ messages, setMessages ] = useState([]);
-  const [ isExpanded, setIsExpanded] = useState(false);
-  const [ isScale, setIsScale ] = useState(false);
-  
-  const cardRef = useRef();
+  const [messages, setMessages] = useState([]);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isScale, setIsScale] = useState(false);
+  const [senderId, setSenderId] = useState(null);
 
+  const cardRef = useRef();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -35,6 +35,15 @@ export default function Messages() {
     };
   }, []);
 
+  useEffect(() => {
+    const response = fetch('/api/userId', {
+      method: "GET",
+    })
+      .then((res) => {
+        setSenderId(res.headers.get("x-user-id"));
+      })
+  }, [])
+
 
   return (
     <motion.div
@@ -45,24 +54,24 @@ export default function Messages() {
       animate={
         isExpanded
           ? {
-              position: isScale ? "fixed" : "absolute",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              borderRadius: isScale ? '0%' : '',
-              border: 'none',
-              zIndex: 6,
-              backgroundColor: "white",
-              transition: {
-                type: "tween",
-              },
-            }
+            position: isScale ? "fixed" : "absolute",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            borderRadius: isScale ? '0%' : '',
+            border: 'none',
+            zIndex: 6,
+            backgroundColor: "white",
+            transition: {
+              type: "tween",
+            },
+          }
           : {
-              position: "relative",
-              transition: {
-                type: "tween",
-              },
-            }
+            position: "relative",
+            transition: {
+              type: "tween",
+            },
+          }
       }
       ref={cardRef}
     >
@@ -77,24 +86,24 @@ export default function Messages() {
           </div>
           <div className="messages__right--wrapper">
             <div className="message__top--button">
-                {
+              {
                 isExpanded ? (
                   <>
-                  {
-                    isScale ? (
-                      <Image src={Arrow} alt="unscale icon" width={25} onClick={() => {setIsScale(false)}}/>
-                    ) : (
-                      <Image src={ArrowRight} alt="scale icon" width={25} onClick={() => {setIsScale(true)}}/>
-                    )
-                  } 
-                    <Image src={Close} alt="close icon" width={25} onClick={(e) => { 
+                    {
+                      isScale ? (
+                        <Image src={Arrow} alt="unscale icon" width={25} onClick={() => { setIsScale(false) }} />
+                      ) : (
+                        <Image src={ArrowRight} alt="scale icon" width={25} onClick={() => { setIsScale(true) }} />
+                      )
+                    }
+                    <Image src={Close} alt="close icon" width={25} onClick={(e) => {
                       e.stopPropagation();
-                      setIsExpanded(false); 
-                      setIsScale(false); 
-                      }} />
+                      setIsExpanded(false);
+                      setIsScale(false);
+                    }} />
                   </>
                 ) :
-                ''
+                  ''
               }
 
             </div>
@@ -102,18 +111,9 @@ export default function Messages() {
         </div>
         <p></p>
       </div>
-      <div className="main__messages--bottom" style={{ flexDirection: isExpanded ? "" : ""}}>
-        <div className="main__messages--side">
-          <ul className={`main__messages--list`}>
-            {messages.length === 0 ? (
-              <li>
-                <p>Aucun message.</p>
-              </li>
-            ): ('')}
-          </ul>
-        </div>
+      <div className="main__messages--bottom" style={{ flexDirection: isExpanded ? "" : "" }}>
         {isExpanded ? (
-          <Chatbox userId={1} receiverId={1}/>
+          <Chatbox senderId={senderId}/>
         ) : (
           ''
         )}
