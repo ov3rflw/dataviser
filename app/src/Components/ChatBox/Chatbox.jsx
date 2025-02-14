@@ -12,8 +12,6 @@ export default function Chatbox({ senderId }) {
     const [userList, setUserList] = useState([]);
     const lastMessage = useRef();
 
-    console.log(senderId);
-
     useEffect(() => {
         loadUsers();
 
@@ -52,7 +50,6 @@ export default function Chatbox({ senderId }) {
         try {
             const res = await fetch('/api/userList');
             const users = await res.json();
-            console.log('Users data:', users); // Vérifiez la structure des données ici
             setUserList(users.getUsers);
         } catch (error) {
             console.error('Erreur chargement des utilisateurs:', error);
@@ -61,15 +58,15 @@ export default function Chatbox({ senderId }) {
 
     const sendMessage = async (e) => {
         e.preventDefault();
-
+    
         if (!message.trim()) return;
-
+    
         const messageData = {
             content: message,
             senderId: senderId,
             receiverId: receiverId
         };
-
+    
         try {
             if (receiverId) {
                 const res = await fetch('/api/messages', {
@@ -77,9 +74,10 @@ export default function Chatbox({ senderId }) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(messageData)
                 });
-
+    
                 if (res.ok) {
                     socket.emit('message', messageData);
+                    setMessages(oldMessages => [...oldMessages, messageData]); // Ajoutez le message à l'état
                     setMessage('');
                 }
             }
@@ -87,6 +85,7 @@ export default function Chatbox({ senderId }) {
             console.error('Erreur envoi message:', error);
         }
     };
+    
 
     const getReceiverId = (e) => {
         const friendId = e.target.getAttribute('data-id');
@@ -99,13 +98,12 @@ export default function Chatbox({ senderId }) {
         return user ? `${user.firstName} ${user.lastName}` : 'Utilisateur inconnu';
     };
 
-
     return (
         <div className="Chatbox__component">
             <div className="Chatbox__left--friendList">
                 <ul>
                     {userList.map((user) => (
-                        <li key={user.id} onClick={getReceiverId} style={{ cursor: "pointer" }}>
+                        <li key={user.id} onClick={getReceiverId} style={{cursor: "pointer"}}>
                             <p data-id={user.id}>
                                 {user.firstName} {user.lastName}
                             </p>
@@ -117,8 +115,8 @@ export default function Chatbox({ senderId }) {
             <div className="Chatbox__component--right">
                 <div className="Chatbox__component--messages">
                     {messages.map((msg, index) => (
-                        <p key={`${index}-${uuidv4()}`} ref={index === messages.length - 1 ? lastMessage : null}>
-                            <b>{msg.senderId == senderId ? 'Moi: ' : `${getUserName(msg.senderId)}: `}</b>
+                        <p key={`${index}-${uuidv4()}`} ref={index === messages.length -  1 ? lastMessage : null}>
+                            <b>{msg.senderId == senderId ? 'Moi: ' : `${getUserName(msg.senderId)} : `}</b>
                             {msg.content}
                         </p>
                     ))}
@@ -139,4 +137,5 @@ export default function Chatbox({ senderId }) {
                 </div>
             </div>
         </div>
-    )};
+    );
+}
