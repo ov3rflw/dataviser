@@ -1,6 +1,7 @@
+/* Dans votre fichier Chatbox.css */
+
 .Chatbox__component {
     display: flex;
-    background-color: red;
     width: 100%;
     height: 100%;
 }
@@ -8,48 +9,117 @@
 .Chatbox__component--left {
     display: flex;
     flex: 1;
-    background-color: yellow;
-    justify-content: center;
+    border-right: 1px solid #d3d2d2;
+}
 
-    .Chatbox__left--friendList {
-        background-color: red;
-        height: 100%;
-        list-style: none;
-    }
+.Chatbox__component--left .Chatbox__left--friendList {
+    height: 100%;
+    margin: auto;
+    width: 100%;
 }
 
 .Chatbox__component--right {
     position: relative;
-    flex: 5;
-    background-color: blue;
-    
-    .Chatbox__component--messages {
-        background-color: orange;
-        height: 90%;
-        overflow-y: scroll;
+    flex: 2;
+    background-color: #f5f3f6;
+}
+
+.Chatbox__component--message {
+    width: 100%;
+    padding: 10px;
+}
+
+.Chatbox__component--right .Chatbox__component--messages {
+    height: 90%;
+    overflow-y: scroll;
+}
+
+.Chatbox__component--right .Chatbox__component--messages .Chatbox__component--content li {
+    list-style-type: none;
+    /* Supprime les puces par défaut des éléments de liste */
+}
+
+.Chatbox__component--right .Chatbox__component--messages .Chatbox__component--content li .Chatbox__component--userTime {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Chatbox__component--right .Chatbox__component--messages .Chatbox__component--content li .Chatbox__component--userTime .sender--left {
+    margin-right: auto;
+}
+
+.Chatbox__component--right .Chatbox__component--messages .Chatbox__component--content li .Chatbox__component--userTime .sender--right {
+    margin-left: auto;
+}
+
+.Chatbox__component--right .Chatbox__component--messages .Chatbox__component--content li .Chatbox__component--userTime .timestamp {
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: gray;
+}
+
+.Chatbox__component--right .Chatbox__component--sender {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10%;
+    position: absolute;
+}
+
+.Chatbox__component--right .Chatbox__component--sender form {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.Chatbox__component--right .Chatbox__component--sender form .inputMessage {
+    position: relative;
+}
+
+.Chatbox__component--right .Chatbox__component--sender form button {
+    height: fit-content;
+}
+
+/* Styles pour les messages */
+.message--left {
+    text-align: left;
+    margin-right: auto;
+    /* Couleur de fond pour les messages de l'ami */
+    border-radius: 10px 10px 10px 0;
+    width: fit-content;
+    color: white;
+    margin-bottom: 10px;
+    padding: 10px;
+
+    .Chatbox__component--message {
+        background-color: rgb(206, 204, 204);
+        /* Couleur de fond pour vos messages */
+        border-radius: 10px;
+        width: fit-content;
+
     }
+}
 
-    .Chatbox__component--sender {
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 10%;
-        position: absolute;
-        background-color: aquamarine;
+.message--right {
+    text-align: right;
+    margin-left: auto;
+    border-radius: 10px 10px 0 10px;
+    color: white;
+    width: fit-content;
+    margin-bottom: 10px;
+    padding: 10px;
 
-        form {
-            display: flex;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
+    .Chatbox__component--message {
+        background-color: rgb(71, 71, 246);
+        /* Couleur de fond pour vos messages */
+        border-radius: 10px;
+        width: fit-content;
 
-            inputMessage {
-                position: relative;
-            }
-
-            button {
-                height:fit-content;
-            }
-        }
     }
+}
+
+.timestamp {
+    color: grey;
 }

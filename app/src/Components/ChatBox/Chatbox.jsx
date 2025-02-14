@@ -58,15 +58,15 @@ export default function Chatbox({ senderId }) {
 
     const sendMessage = async (e) => {
         e.preventDefault();
-    
+
         if (!message.trim()) return;
-    
+
         const messageData = {
             content: message,
             senderId: senderId,
             receiverId: receiverId
         };
-    
+
         try {
             if (receiverId) {
                 const res = await fetch('/api/messages', {
@@ -74,10 +74,10 @@ export default function Chatbox({ senderId }) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(messageData)
                 });
-    
+
                 if (res.ok) {
                     socket.emit('message', messageData);
-                    setMessages(oldMessages => [...oldMessages, messageData]); // Ajoutez le message à l'état
+                    setMessages(oldMessages => [...oldMessages, messageData]);
                     setMessage('');
                 }
             }
@@ -85,7 +85,7 @@ export default function Chatbox({ senderId }) {
             console.error('Erreur envoi message:', error);
         }
     };
-    
+
 
     const getReceiverId = (e) => {
         const friendId = e.target.getAttribute('data-id');
@@ -100,28 +100,43 @@ export default function Chatbox({ senderId }) {
 
     return (
         <div className="Chatbox__component">
-            <div className="Chatbox__left--friendList">
-                <ul>
+            <div className="Chatbox__component--left">
+                <ul className="Chatbox__left--friendList">
                     {userList.map((user) => (
                         <li key={user.id} onClick={getReceiverId} style={{cursor: "pointer"}}>
-                            <p data-id={user.id}>
+                            <b data-id={user.id}>
                                 {user.firstName} {user.lastName}
-                            </p>
+                            </b>
                         </li>
                     ))}
                 </ul>
             </div>
-
+    
             <div className="Chatbox__component--right">
                 <div className="Chatbox__component--messages">
-                    {messages.map((msg, index) => (
-                        <p key={`${index}-${uuidv4()}`} ref={index === messages.length -  1 ? lastMessage : null}>
-                            <b>{msg.senderId == senderId ? 'Moi: ' : `${getUserName(msg.senderId)} : `}</b>
-                            {msg.content}
-                        </p>
-                    ))}
+                    <ul className="Chatbox__component--content">
+                        {messages.map((msg, index) => (
+                            <li
+                                key={`${index}-${uuidv4()}`}
+                                ref={index === messages.length - 1 ? lastMessage : null}
+                                className={msg.senderId == senderId ? 'message--right' : 'message--left'}
+                            >
+                                <div className="Chatbox__component--messageHeader">
+                                    <p className="timestamp">
+                                        {new Date(msg.createdAt).toLocaleTimeString()}
+                                    </p>
+                                </div>
+                                <div className="Chatbox__component--message">
+                                    <b className="sender">
+                                        {msg.senderId == senderId ? 'Moi' : getUserName(msg.senderId)}
+                                    </b>
+                                    <p>{msg.content}</p>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-
+    
                 <div className="Chatbox__component--sender">
                     <form onSubmit={sendMessage}>
                         <div className="inputMessage">
@@ -137,5 +152,5 @@ export default function Chatbox({ senderId }) {
                 </div>
             </div>
         </div>
-    );
+    );    
 }
