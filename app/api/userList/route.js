@@ -1,18 +1,17 @@
-import { NextResponse } from "next/server";
-import { prisma } from "../../src/lib/prisma";
+import { NextResponse } from 'next/server';
 
-export async function GET(){
-    const getUsers = await prisma.user.findMany({
-        select: {
-            id: true,
-            lastName: true,
-            firstName: true
-        }
-    });
+export async function GET(request) {
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      lastName: true,
+      firstName: true,
+    },
+  });
 
-    try {
-        return NextResponse.json({status: 200, getUsers})
-    } catch (error) {
-        return NextResponse.json({status: 401}, {error: error})
-    }
+  return NextResponse.json(users, {
+    headers: {
+      'Cache-Control': 'public, max-age=300, stale-while-revalidate=60',
+    },
+  });
 }

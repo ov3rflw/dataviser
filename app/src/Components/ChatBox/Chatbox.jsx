@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import "./Chatbox.css";
 import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
+import Avatar from '../../../public/assets/profile_test.jpg';
+import Image from 'next/image';
+import useContactStore from '../../../store/contactsStore';
 
 const socket = io('http://localhost:3001');
 
@@ -11,11 +14,15 @@ export default function Chatbox({ senderId }) {
     const [receiverId, setReceiverId] = useState(null);
     const [userList, setUserList] = useState([]);
     const lastMessage = useRef();
+    const currentConv = useRef();
+
+    const { contacts, isLoading, fetchContacts } = useContactStore();
+   
+    useEffect(() => {
+        fetchContacts()
+      }, [fetchContacts]);
 
     useEffect(() => {
-        loadUsers();
-
-        // écouter les nouveaux messages
         socket.on('message', newMessage => {
             setMessages(oldMessages => [...oldMessages, newMessage]);
         });
@@ -31,6 +38,14 @@ export default function Chatbox({ senderId }) {
             lastMessage.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [messages]);
+
+    useEffect(() => {
+        if (isClicked) {
+            currentConv.current.style = "background-color:red"
+        }
+    }, [isClicked])
+
+
 
     const loadMessages = async (receiverId) => {
         try {
@@ -88,13 +103,15 @@ export default function Chatbox({ senderId }) {
 
 
     const getReceiverId = (e) => {
+        console.log('clicked');
         const friendId = e.target.getAttribute('data-id');
+        console.log(friendId);
         setReceiverId(friendId);
         loadMessages(friendId);
     };
 
     const getUserName = (senderId) => {
-        const user = userList.find(user => user.id == senderId);
+        const user = contacts.getUsers.find(user => user.id == senderId);
         return user ? `${user.firstName} ${user.lastName}` : 'Utilisateur inconnu';
     };
 
@@ -102,16 +119,19 @@ export default function Chatbox({ senderId }) {
         <div className="Chatbox__component">
             <div className="Chatbox__component--left">
                 <ul className="Chatbox__left--friendList">
-                    {userList.map((user) => (
-                        <li key={user.id} onClick={getReceiverId} style={{cursor: "pointer"}}>
+                    {isLoading ? '' : (contacts.getUsers.map((user) => (
+                        <li key={user.id} data-id={user.id} onClick={getReceiverId} style={{ cursor: "pointer" }}>
+                            <div className="Chatbox__avatar--wrapper">
+                                <Image data-id={user.id} src={Avatar} alt='avatar' width={50} height={50} />
+                            </div>
                             <b data-id={user.id}>
                                 {user.firstName} {user.lastName}
                             </b>
                         </li>
-                    ))}
+                    )))}
                 </ul>
             </div>
-    
+
             <div className="Chatbox__component--right">
                 <div className="Chatbox__component--messages">
                     <ul className="Chatbox__component--content">
@@ -136,7 +156,7 @@ export default function Chatbox({ senderId }) {
                         ))}
                     </ul>
                 </div>
-    
+
                 <div className="Chatbox__component--sender">
                     <form onSubmit={sendMessage}>
                         <div className="inputMessage">
@@ -144,7 +164,7 @@ export default function Chatbox({ senderId }) {
                                 type="text"
                                 value={message}
                                 onChange={e => setMessage(e.target.value)}
-                                placeholder="Votre message"
+                                placeholder="Écrivez un message"
                             />
                         </div>
                         <button className="sendButton" type="submit">Envoyer</button>
@@ -152,5 +172,5 @@ export default function Chatbox({ senderId }) {
                 </div>
             </div>
         </div>
-    );    
+    );
 }

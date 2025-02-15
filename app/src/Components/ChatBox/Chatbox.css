@@ -14,6 +14,20 @@
     height: 100%;
     margin: auto;
     width: 100%;
+
+    li {
+        display: flex;
+        margin: 3% 0 3% 0;
+        padding: 5% 5% 5% 3%;
+
+        .Chatbox__avatar--wrapper {
+            display: flex;
+            margin-right: 2%;
+            img {
+                border-radius: 50%;
+            }
+        }
+    }
 }
 
 .Chatbox__component--right {
@@ -106,7 +120,7 @@
     padding: 10px;
 
     .Chatbox__component--message {
-        background-color: rgb(71, 71, 246);
+        background-color: #007bff;
         border-radius: 10px;
         width: fit-content;
 
