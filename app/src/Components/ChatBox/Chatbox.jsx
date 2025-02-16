@@ -39,12 +39,6 @@ export default function Chatbox({ senderId }) {
         }
     }, [messages]);
 
-    useEffect(() => {
-        if (isClicked) {
-            currentConv.current.style = "background-color:red"
-        }
-    }, [isClicked])
-
 
 
     const loadMessages = async (receiverId) => {
