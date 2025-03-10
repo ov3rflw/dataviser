@@ -4,26 +4,27 @@ import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 import Avatar from '../../../public/assets/profile_test.jpg';
 import Image from 'next/image';
-import useContactStore from '../../../store/contactsStore';
-
-const socket = io('http://localhost:3001');
+import useUserStore from '../../../store/contactsStore';
 
 export default function Chatbox({ senderId }) {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [receiverId, setReceiverId] = useState(null);
     const lastMessage = useRef();
-    
-    const { contacts, isLoading, fetchContacts } = useContactStore();
 
-    console.log(messages)
-    
+    const { users, isLoading, fetchContacts, initialize } = useUserStore();
 
     useEffect(() => {
-        fetchContacts()
-      }, [fetchContacts]);
+        initialize();
+
+        return () => {
+            useUserStore.getState().cleanup();
+        }
+    }, [initialize]);
 
     useEffect(() => {
+        const socket = io('http://localhost:3001');
+
         socket.on('message', newMessage => {
             setMessages(oldMessages => [...oldMessages, newMessage]);
         });
@@ -49,8 +50,6 @@ export default function Chatbox({ senderId }) {
             if (Array.isArray(data)) {
                 setMessages(data);
             }
-
-            console.log(data);
         } catch (error) {
             console.error('Erreur chargement messages:', error);
         }
@@ -77,7 +76,6 @@ export default function Chatbox({ senderId }) {
 
                 if (res.ok) {
                     socket.emit('message', messageData);
-                    setMessages(oldMessages => [...oldMessages, messageData]);
                     setMessage('');
                 }
             }
@@ -89,21 +87,24 @@ export default function Chatbox({ senderId }) {
 
     const getReceiverId = (e) => {
         const friendId = e.target.getAttribute('data-id');
-        console.log(friendId);
         setReceiverId(friendId);
         loadMessages(friendId);
     };
 
     const getUserName = (senderId) => {
-        const user = contacts.getUsers.find(user => user.id == senderId);
+        const user = users.find(user => user.id == senderId);
         return user ? `${user.firstName} ${user.lastName}` : 'Utilisateur inconnu';
     };
+
+    users.map((user) => {
+        console.log(user.id);
+    })
 
     return (
         <div className="Chatbox__component">
             <div className="Chatbox__component--left">
                 <ul className="Chatbox__left--friendList">
-                    {isLoading ? '' : (contacts.getUsers.map((user) => (
+                    {isLoading ? '' : (users.map((user) => (
                         <li key={user.id} data-id={user.id} onClick={getReceiverId} style={{ cursor: "pointer" }}>
                             <div className="Chatbox__avatar--wrapper">
                                 <Image data-id={user.id} src={Avatar} alt='avatar' width={50} height={50} />

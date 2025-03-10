@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: db-1
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dataviser
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev
+    ports:
+      - "3306:3306"
+    networks:
+      - dataviser_network
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: app-1
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "mysql://dev:dev@db:3306/dataviser"
+    ports:
+      - "3000:3000"
+    networks:
+      - dataviser_network
+
+networks:
+  dataviser_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

@@ -10,62 +10,75 @@ export async function POST(request) {
     const { lastName, firstName, email, password, confirmPassword } = body;
     const emailIsValid = validateEmail(email);
     const existingUser = await prisma.user.findUnique({
-        where: {
-          email: email,
-        },
-      });
+      where: {
+        email: email,
+      },
+    });
 
     let hashedPassword;
 
-    if(emailIsValid == null){
-        return NextResponse.json(
-            {errors: ["Veuillez vérifier votre adresse-email"]},
-            {status: 400}
-        )
-    }
-  
-    if (existingUser) {
-        return NextResponse.json(
-            { error: "Cette adresse e-mail est déjà utilisée." },
-            { status: 400 }
-        );
-      }
-    
-    if( !lastName || !firstName || !email || !password || !confirmPassword){
+    if (emailIsValid == null) {
       return NextResponse.json(
-        { errors: ["Veuillez compléter tous les champs."]},
-        { status: 400}
+        { errors: ["Veuillez vérifier votre adresse-email"] },
+        { status: 400 }
       )
     }
-    
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "Cette adresse e-mail est déjà utilisée." },
+        { status: 400 }
+      );
+    }
+
+    if (!lastName || !firstName || !email || !password || !confirmPassword) {
+      return NextResponse.json(
+        { errors: ["Veuillez compléter tous les champs."] },
+        { status: 400 }
+      )
+    }
+
     if (password.length < 6) {
       return NextResponse.json(
         { errors: ["Votre mot de passe doit faire plus de 6 caractères"] },
         { status: 400 }
       );
     }
-    
-    if(password == confirmPassword){
-        await hashPassword(password)
+
+    if (password == confirmPassword) {
+      await hashPassword(password)
         .then((e) => {
           hashedPassword = e;
         })
 
-        const newUser = await prisma.user.create({
-            data:{
-                lastName, firstName, hashedPassword:hashedPassword, email
-            }
-        });
+      const newUser = await prisma.user.create({
+        data: {
+          lastName, firstName, hashedPassword: hashedPassword, email
+        }
+      });
 
-        return NextResponse.json({status: 200, message:["Utilisateur créé !"]})
+      try {
+        await fetch('http://localhost:3001/notify', {
+          event: 'user_created',
+          user: {
+            id:newUser.id,
+            lastName:newUser.lastName,
+            firstName:newUser.firstName
+          }
+        })
+      } catch (socketError) {
+        console.error(socketError);
+      }
+
+      return NextResponse.json({ status: 201 })
 
     } else {
-        return NextResponse.json({errors:["Les mots de passe ne sont pas identiques."]},{status: 400})
-    } 
-    
-  } catch(e) {
-    if(e.name == "PrismaClientKnownRequestError" && e.code == "P2002"){
-      return NextResponse.json({status: 400},{errors:["Cette adresse e-mail est déjà utilisée"]})
+      return NextResponse.json({ errors: ["Les mots de passe ne sont pas identiques."] }, { status: 400 })
+    }
+
+  } catch (e) {
+    if (e.name == "PrismaClientKnownRequestError" && e.code == "P2002") {
+      return NextResponse.json({ status: 400 }, { errors: ["Cette adresse e-mail est déjà utilisée"] })
     }
     return NextResponse.json(e);
   }

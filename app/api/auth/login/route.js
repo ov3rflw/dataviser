@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "../../../src/lib/prisma";
 import { SignJWT } from "jose";
 import { hashCompare } from "../../../src/lib/hashCompare";
+import { contactsStore } from "../../../store/contactsStore"
 
 export async function POST(request) {
 

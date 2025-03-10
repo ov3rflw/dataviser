@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { prisma } from '../../src/lib/prisma';
 
 export async function GET(request) {
   const users = await prisma.user.findMany({
@@ -9,9 +10,5 @@ export async function GET(request) {
     },
   });
 
-  return NextResponse.json(users, {
-    headers: {
-      'Cache-Control': 'public, max-age=300, stale-while-revalidate=60',
-    },
-  });
+  return NextResponse.json(users);
 }
