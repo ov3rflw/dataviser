@@ -12,12 +12,13 @@ export default function Chatbox({ senderId }) {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [receiverId, setReceiverId] = useState(null);
-    const [userList, setUserList] = useState([]);
     const lastMessage = useRef();
-    const currentConv = useRef();
-
+    
     const { contacts, isLoading, fetchContacts } = useContactStore();
-   
+
+    console.log(messages)
+    
+
     useEffect(() => {
         fetchContacts()
       }, [fetchContacts]);
@@ -55,16 +56,6 @@ export default function Chatbox({ senderId }) {
         }
     };
 
-    const loadUsers = async () => {
-        try {
-            const res = await fetch('/api/userList');
-            const users = await res.json();
-            setUserList(users.getUsers);
-        } catch (error) {
-            console.error('Erreur chargement des utilisateurs:', error);
-        }
-    };
-
     const sendMessage = async (e) => {
         e.preventDefault();
 
@@ -97,7 +88,6 @@ export default function Chatbox({ senderId }) {
 
 
     const getReceiverId = (e) => {
-        console.log('clicked');
         const friendId = e.target.getAttribute('data-id');
         console.log(friendId);
         setReceiverId(friendId);

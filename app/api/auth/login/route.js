@@ -4,6 +4,8 @@ import { SignJWT } from "jose";
 import { hashCompare } from "../../../src/lib/hashCompare";
 
 export async function POST(request) {
+
+    console.log(request);
     try {
         if (request.method !== "POST") {
             return NextResponse.json(

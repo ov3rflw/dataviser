@@ -26,7 +26,7 @@ export default function AuthForm() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageSrc.length)
-        }, 15000);
+        }, 5000);
 
         return () => clearInterval(interval);
 
