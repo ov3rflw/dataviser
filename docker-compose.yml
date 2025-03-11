@@ -15,8 +15,24 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+  websocket:
+    build: ./websocket_server
+    container_name: websocket_server
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: dataviser
+      DATABASE_USER: dev
+      DATABASE_PASSWORD: dev
+      DATABASE_NAME: dataviser
+    ports:
+      - "3001:3001"
+    networks:
+      - dataviser_network
+
   app:
-    build: .
+    build: ./dataviser
     container_name: app-1
     restart: always
     depends_on:
