@@ -11,6 +11,10 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
 
+  socket.on('connection', (stream) => {
+    console.log("Nouvelle connexion : ", stream)
+  })
+
   // Quand on reçoit un message
   socket.on('message', (message) => {
     console.log('Message reçu:', message);

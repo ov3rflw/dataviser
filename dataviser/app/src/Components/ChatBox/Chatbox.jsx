@@ -11,6 +11,7 @@ export default function Chatbox({ senderId }) {
     const [messages, setMessages] = useState([]);
     const [receiverId, setReceiverId] = useState(null);
     const lastMessage = useRef();
+    const socketRef = useRef(null);
 
     const { users, isLoading, fetchContacts, initialize } = useUserStore();
 
@@ -23,15 +24,16 @@ export default function Chatbox({ senderId }) {
     }, [initialize]);
 
     useEffect(() => {
-        const socket = io('http://localhost:3001');
 
-        socket.on('message', newMessage => {
+        socketRef.current = io('http://localhost:3001');
+
+        socketRef.current.on('message', newMessage => {
             setMessages(oldMessages => [...oldMessages, newMessage]);
         });
 
         // nettoyer à la fin
         return () => {
-            socket.off('message');
+            socketRef.current.off('message');
         };
     }, []);
 
@@ -75,7 +77,7 @@ export default function Chatbox({ senderId }) {
                 });
 
                 if (res.ok) {
-                    socket.emit('message', messageData);
+                    socketRef.current.emit('message', messageData);
                     setMessage('');
                 }
             }

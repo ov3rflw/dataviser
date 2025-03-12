@@ -33,6 +33,8 @@ services:
 
   app:
     build: ./dataviser
+    env_file:
+      - ./dataviser/.env
     container_name: app-1
     restart: always
     depends_on:
