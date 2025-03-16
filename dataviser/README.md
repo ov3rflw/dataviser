@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Pré-requis
 
-## Getting Started
+- docker-compose
+- docker
+- docker-desktop
+- npm
 
-First, run the development server:
+## Installation des pré-requis :
+
+[Docker Desktop: The #1 Containerization Tool for Developers | Docker](https://www.docker.com/products/docker-desktop/)
+
+[Downloading and installing Node.js and npm | npm Docs](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+## Télécharger le projet Dataviser
+
+Tapez la commande suivante :
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/ov3rflw/dataviser.git
+cd dataviser
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+À l’intérieur de ce dossier, vous trouverez deux autres dossiers et un fichier de configuration.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+| Dossier/Fichier | Description |
+| --- | --- |
+| `application_web` | Application web |
+| `websocket_server` | Serveur WebSocket |
+| `docker-compose.yml` | Fichier de configuration pour Docker Compose |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Build et dockerization de Dataviser
 
-## Learn More
+Pour pouvoir utiliser Dataviser, il faudra builder le projet et effectuer une petite manipulation sur le conteneur **app-1**.
 
-To learn more about Next.js, take a look at the following resources:
+### Docker Compose
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+À la racine du projet, tapez la commande suivante : 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+docker-compose up --build -d 
+```
 
-## Deploy on Vercel
+Cette commande va builder les images des conteneurs avant de les démarrer en arrière-plan sans bloquer le terminal.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Configuration de `app-1`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Ensuite, il faudra se connecter au conteneur **app-1** pour effectuer un push du schéma **Prisma** vers le serveur **MySQL**.
+
+```bash
+# Se connecter à app-1
+docker exec -it app-1 sh
+npx prisma migrate dev --name init
+```
+
+## ⚠️ Problèmes connus ⚠️
+
+### Erreur de base de données
+
+S’il est impossible de se connecter à la plateforme Dataviser, il se peut que les droits de l’utilisateur `dev` dans la base de données ne soient pas les bons. Pour cela, exécutez les commandes suivantes :
+
+```bash
+docker exec -it db-1 sh
+mysql -u root -p [pass root]
+
+GRANT ALL PRIVILEGES ON dataviser.* TO "dev"@"%";
+FLUSH PRIVILEGES;
+exit;
+```
+
+### Erreur lors de la phase de build
+
+Si vous obtenez une erreur comme :
+
+```bash
+docker: Error response from daemon: driver failed programming external connectivity on endpoint <container_name> (hash):
+Bind for 0.0.0.0:3306 failed: port is already allocated.
+```
+
+Il est possible qu’un service tourne sur le port `3306` et empêche la base de données du conteneur `db-1` de l’utiliser.
+
+Il faudra donc vérifier si MySQL ne tourne pas déjà en arrière-plan. Si c’est le cas, arrêtez le processus et relancez le build.
+
+---
+
+## 🚧 Statut du projet
+
+Dataviser n'est pas encore un projet opérationnel. Il est actuellement en cours de développement, et nous prévoyons de le sortir avant la fin de juin.
