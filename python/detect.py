@@ -1,3 +1,5 @@
+# TODO : ajouter d'autres méthodes pour la détection de vulnérabilité sur le réseau
+
 import socketio
 from scapy.all import sniff
 from collections import defaultdict
@@ -33,13 +35,13 @@ def detect_anomalies(packet):
 
         if traffic_count[src_ip] > PACKET_THRESHOLD:
             alert = {
-                "type": "ddos",
+                "type": "DDOS",
                 "message": f"Possible attaque DDoS détectée depuis {src_ip}",
                 "srcIp": src_ip
             }
             detection = {
                 "srcIp": src_ip,
-                "detectionType": "DDoS",
+                "detectionType": "DDOS",
                 "packetCount": traffic_count[src_ip],
                 "threshold": PACKET_THRESHOLD
             }
