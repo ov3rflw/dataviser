@@ -11,7 +11,6 @@ import Google from "../../../public/assets/google.png";
 import Image from "next/image";
 import Red from "../../../public/assets/red.jpg";
 import Sky from "../../../public/assets/sky.jpg";
-import { io } from "socket.io-client";
 
 export default function Register() {
 
@@ -24,8 +23,6 @@ export default function Register() {
         { status: "Veuillez accepter les conditions d'utilisations", cond: false }
     );
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-    const socket = io('http://localhost:3001');
 
     const router = useRouter();
 

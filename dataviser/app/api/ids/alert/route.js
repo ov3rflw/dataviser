@@ -1,17 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "../../../src/lib/prisma";
 
-export async function POST(req){
-
-    const response = await req.json();
-
-    const alert = await prisma.alert.create({
-        srcIp,alertType,description,timestamp,ip
-    });
+export async function GET(){
     
     try {
-        return NextResponse.json({status: 200, message: {response,alert}})
+        const alerts = await prisma.alert.findMany({
+            orderBy: {
+                timestamp: 'desc'
+            }
+        })
+
+        return NextResponse.json({status: 200, alerts})
     } catch (error) {
-        return NextResponse.json({status: 500}, {message:error})
+        return NextResponse.json({status: 500, message:error})
     }
 }

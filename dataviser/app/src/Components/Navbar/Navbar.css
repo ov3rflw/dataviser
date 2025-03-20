@@ -9,7 +9,6 @@ nav {
     flex-direction: column;
     width:14%;
     height: 100%;
-
     padding: 1.5%;
 }
 
@@ -71,18 +70,17 @@ nav {
     overflow: hidden; /* Pour éviter que le gradient dépasse du lien */
 }
 
-/* L'élément pseudo qui contient le fond */
 #nav__top > li:nth-child(n+2)::before {
-    content: ""; /* Nécessaire pour créer l'élément pseudo */
-    position: absolute; /* Pour positionner le gradient derrière le texte */
+    content: ""; 
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background: linear-gradient(129deg, rgba(2,0,36,1) 0%, rgba(235,218,224,1) 0%, rgba(230,221,247,1) 50%);
-    opacity: 0; /* Initialement invisible */
-    transition: opacity 0.2s ease; /* Transition sur l'opacité */
-    z-index: -1; /* Assure que le gradient est derrière le texte */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: -1;
 }
 
 /* Survol du lien */

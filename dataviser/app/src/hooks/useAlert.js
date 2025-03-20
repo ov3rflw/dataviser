@@ -1,16 +1,36 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 
-export default function useAlerts(){
-
+export default function useAlerts() {
     const [alerts, setAlerts] = useState([]);
     const [alertCount, setAlertCount] = useState(0);
-
+    const socketRef = useRef(null);
     useEffect(() => {
 
-        const socket = io("http://localhost:3001");
-        socket.on('log')
-        
+        console.log("useAlert : ", alerts);
+        const fetchAlerts = async () => {
+            try {
+                const response = await fetch('/api/ids/alert');
+                const data = await response.json();
+                console.log("data : ", data.alerts);
+                setAlerts(data.alerts);
+                setAlertCount(data.alerts.length);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des alertes:', error);
+            }
+        };
+
+        fetchAlerts();
+
+        socketRef.current = io('http://localhost:3001/');
+        socketRef.current.on('alert', (newAlert) => {
+            setAlerts((prevAlerts) => [...prevAlerts, newAlert]);
+            setAlertCount((prevCount) => prevCount + 1);
+        });
+
+        return () => {
+            socketRef.current.off('alert');
+        };
     }, []);
 
     return { alerts, alertCount };

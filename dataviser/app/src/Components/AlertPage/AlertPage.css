@@ -1,0 +1,42 @@
+.alert__page {
+    padding-top: 1.5%;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .alert__page--select {
+        height: 7%;
+
+        .alert__page--list {
+            align-items: center;
+            display: flex;
+            height: 100%;
+
+            li {
+                margin-right: 5%;
+                padding: 10px;
+                cursor: pointer;
+
+                p {
+                    font-family: "Poppins", serif;
+                    font-size: 0.85rem;
+                    color: #B4B4B4;
+                }
+            }
+        }
+    }
+
+    .alert__page--main {
+    }
+}
+
+#health {
+}
+
+#general {
+
+}
+
+#vuln {
+
+}
