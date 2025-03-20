@@ -9,18 +9,8 @@ export default function useAlerts(){
     useEffect(() => {
 
         const socket = io("http://localhost:3001");
-
-        socket.on("alert", (data) => {
-
-        if (data && data.message && data.timestamp) {
-            setAlerts((prevAlerts) => [data, ...prevAlerts]);            
-            setAlertCount((prevCount) => prevCount + 1);
-        }
-        });
-
-        return () => {
-            socket.disconnect();
-        };
+        socket.on('log')
+        
     }, []);
 
     return { alerts, alertCount };

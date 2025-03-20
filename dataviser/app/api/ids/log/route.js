@@ -1,16 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { prisma } from "../../../src/lib/prisma";
 
-export async function POST(req){
-
-    const response = await req.json();
-
-    const log = await prisma.log.create({
-        level,message,category,ip,timestamp
+export async function GET() {
+  try {
+    const logs = await prisma.log.findMany({
+      orderBy: {
+        timestamp: 'desc'
+      },
+      take: 100 // Limiter à 100 entrées récentes
     });
     
-    try {
-        return NextResponse.json({status: 200, message:{response, log}})
-    } catch (error) {
-        return NextResponse.json({status: 500}, {message:error})
-    }
+    return NextResponse.json(logs);
+  } catch (error) {
+    console.error("Erreur:", error);
+    return NextResponse.json({ status: 500, message: error.message });
+  }
 }

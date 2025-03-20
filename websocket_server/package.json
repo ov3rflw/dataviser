@@ -1,17 +1,16 @@
 {
     "dependencies": {
-      "@prisma/client": "^6.3.1",
-      "dotenv": "^16.4.7",
-      "socket.io": "^4.8.1",
-      "ws": "^8.18.0"
+        "@prisma/client": "^6.5.0",
+        "dotenv": "^16.4.7",
+        "socket.io": "^4.8.1",
+        "ws": "^8.18.0"
     },
     "name": "dataviser_server",
     "version": "1.0.0",
-    "type":"module",
+    "type": "module",
     "main": "server.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node server.js"   
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
     }
-  }
-  
+}

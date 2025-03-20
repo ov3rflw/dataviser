@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Alert {
+  id          Int      @id @default(autoincrement())
+  srcIp       String
+  alertType   String
+  description String
+  timestamp   DateTime
+  ip          IP       @relation(fields: [srcIp], references: [ip])
+}
+
+model IP {
+  ip          String   @id
+  hostname    String?
+  netbiosName String?
+  alerts      Alert[]
+}
+
+model Detection {
+  id          Int      @id @default(autoincrement())
+  srcIp       String
+  detectionType String
+  packetCount Int
+  threshold   Int
+  timestamp   DateTime
+  ip          IP       @relation(fields: [srcIp], references: [ip])
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
+  level     String
+  message   String
+  category  String?
+  ip        String?
+  timestamp DateTime @default(now())
+}
