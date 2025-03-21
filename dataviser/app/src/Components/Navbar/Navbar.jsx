@@ -12,6 +12,7 @@ import Settings from '../../../public/assets/settings.svg';
 import Stats from '../../../public/assets/monitoring.svg';
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -38,7 +39,7 @@ export default function Navbar(){
     return(
         <nav>
             <div id="nav__title">
-                <h2 id="nav__title--name">dataviser://</h2>
+                <h2 id="nav__title--name" style={{cursor: "pointer"}}onClick={() => router.push('/dashboard')}>dataviser://</h2>
             </div>
             <ul id="nav__top">
                 <li id="nav__top--decorator">
@@ -47,46 +48,60 @@ export default function Navbar(){
                     </p>
                 </li>
                 <li id="nav__top--dashboard">
-                    <Image src={Home} alt="home icon" />
-                    <a href="">
-                        Tableau de bord
-                    </a>
+                    <Link href="/dashboard">
+                        <Image src={Home} alt="home icon" />
+                        <p>
+                            Tableau de bord
+                        </p>
+                    </Link>
                 </li>
                 <li id="nav__top--alerts">
-                    <Image src={Alert} alt="alert icon"/>
-                    <a href="">
-                        Alertes
-                    </a>
+                    <Link href="/alerts">
+                        <Image src={Alert} alt="alert icon"/>
+                        <p>
+                            Alertes
+                        </p>
+                    </Link>
                 </li>
                 <li id="nav__top--network">
-                    <Image src={Network} alt="network icon"/>
-                    <a href="">
-                        Trafic Réseau
-                    </a>
+                    <Link href="/network">
+                        <Image src={Network} alt="network icon"/>
+                        <p>
+                            Trafic Réseau
+                        </p>
+                    </Link>
                 </li>
                 <li id="nav__top--rules">
-                    <Image src={Rules} alt="rules icon"/>
-                    <a href="">
-                        Règles de Détection
-                    </a>
+                    <Link href="/rules">
+                        <Image src={Rules} alt="rules icon"/>
+                        <p style={{textWrap:"nowrap"}}>
+                            Règles Détection
+                        </p>
+                    </Link>
                 </li>
                 <li id="nav__top--logs">
-                    <Image src={Logs} alt="logs icon"/>
-                    <a href="">
-                        Logs & Historique
-                    </a>
+                    <Link href="/logs">
+                        <Image src={Logs} alt="logs icon"/>
+                        <p>
+                            Logs & Historique
+                        </p>
+                    </Link>
                 </li>
                 <li id="nav__top--stats">
-                    <Image src={Stats} alt="stats icon"/>
-                    <a href="">
-                        Statistiques
-                    </a>
+                    <Link href="/stats">
+                        <Image src={Stats} alt="stats icon"/>
+                        <p>
+                            Statistiques
+                        </p>
+                    </Link>
                 </li>
                 <li id="nav__top--settings">
-                    <Image src={Settings} alt="settings icon"/>
-                    <a href="">
-                        Paramètres
-                    </a>
+                    <Link href="/settings">
+                        <Image src={Settings} alt="settings icon"/>
+                        <p>
+                            Paramètres
+                        </p>
+                    </Link>
                 </li>
             </ul>
             <ul id="nav__bottom">

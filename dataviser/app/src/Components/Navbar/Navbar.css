@@ -34,7 +34,8 @@ nav {
 }
 
 #nav__top > li:nth-child(n+2) > a {
-    margin-left: 5px;
+    width: 100%;
+    padding: 15px 0 15px 10px;
 }
 
 #nav__top--decorator {
@@ -43,7 +44,7 @@ nav {
     font-size: 0.85rem;
     color: #B4B4B4;
     margin-left: 3px;
-    margin-bottom: -10px;
+    margin-bottom: 10px;
     user-select: none;
 }
 
@@ -51,7 +52,6 @@ nav {
     position: relative;
     font-family: "Poppins", serif;
     font-size: 0.85rem;
-    padding: 15px 0 15px 10px;
     color: #7B7B7B;
     border-radius: 15px;
     /*background:none;*/
@@ -64,10 +64,16 @@ nav {
 }
 
 #nav__top > li {
-    background: none; /* Pas de fond par défaut */
-    padding: 10px;
-    position: relative; /* Nécessaire pour le positionnement de l'élément pseudo */
-    overflow: hidden; /* Pour éviter que le gradient dépasse du lien */
+    background: none;
+    /*padding: 10px;*/
+    position: relative;
+    overflow: hidden;
+    
+    a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
 }
 
 #nav__top > li:nth-child(n+2)::before {
@@ -83,12 +89,10 @@ nav {
     z-index: -1;
 }
 
-/* Survol du lien */
 #nav__top > li:nth-child(n+2):hover::before {
     opacity: 1; /* Le gradient devient visible */
 }
 
 #nav__bottom {
-    margin-top: auto;
-    margin-bottom: 50px;
+    margin-top: 15%;
 }
