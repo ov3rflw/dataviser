@@ -11,10 +11,6 @@ export default function Alert() {
 
     const { alerts, alertCount } = useAlerts([]);
 
-    alerts.map((element) => {
-        console.log(element.srcIp)
-    })
-
     return (
         <div className="main__alerts">
             <div className="main__alerts--top">

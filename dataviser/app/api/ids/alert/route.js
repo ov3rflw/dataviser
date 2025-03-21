@@ -8,10 +8,15 @@ export async function GET(){
             orderBy: {
                 timestamp: 'desc'
             }
-        })
+        });
 
-        return NextResponse.json({status: 200, alerts})
+        if(Array.isArray(alerts) && alerts.length > 0){
+            return NextResponse.json({status: 200, alerts});
+        }
+
+        return NextResponse.json({status: 200, message:"Pas de données à récupérer"});
+
     } catch (error) {
-        return NextResponse.json({status: 500, message:error})
+        return NextResponse.json({status: 500, error});
     }
 }

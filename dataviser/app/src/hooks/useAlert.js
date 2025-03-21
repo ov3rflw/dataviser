@@ -12,9 +12,14 @@ export default function useAlerts() {
             try {
                 const response = await fetch('/api/ids/alert');
                 const data = await response.json();
-                console.log("data : ", data.alerts);
-                setAlerts(data.alerts);
-                setAlertCount(data.alerts.length);
+
+                if(data.message){
+                    console.log("Pas d'alertes dans la base")
+                } else {
+                    setAlerts(data.alerts);
+                    setAlertCount(data.alerts.length);
+                }
+
             } catch (error) {
                 console.error('Erreur lors de la récupération des alertes:', error);
             }
