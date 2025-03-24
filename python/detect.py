@@ -36,7 +36,7 @@ def detect_anomalies(packet):
         if traffic_count[src_ip] > PACKET_THRESHOLD:
             alert = {
                 "type": "DDOS",
-                "message": f"Possible attaque DDoS détectée depuis {src_ip}",
+                "message": f"Possible attaque DDoS détectée",
                 "srcIp": src_ip
             }
             detection = {

@@ -7,7 +7,7 @@ nav {
     float: left;
     display: flex;
     flex-direction: column;
-    width:14%;
+    width:15%;
     height: 100%;
     padding: 1.5%;
 }
@@ -18,6 +18,7 @@ nav {
     font-family: "Hubot Sans", serif;
     font-optical-sizing: auto;
     user-select: none;
+    text-align: center;
 }
 
 #nav__top {
@@ -65,7 +66,6 @@ nav {
 
 #nav__top > li {
     background: none;
-    /*padding: 10px;*/
     position: relative;
     overflow: hidden;
     
@@ -73,6 +73,10 @@ nav {
         display: flex;
         align-items: center;
         width: 100%;
+
+        p {
+            margin-left: 5px;
+        }
     }
 }
 
@@ -94,5 +98,6 @@ nav {
 }
 
 #nav__bottom {
-    margin-top: 15%;
+    text-align: center;
+    margin-top: 80%;
 }

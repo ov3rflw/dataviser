@@ -39,7 +39,9 @@ export default function Navbar(){
     return(
         <nav>
             <div id="nav__title">
-                <h2 id="nav__title--name" style={{cursor: "pointer"}}onClick={() => router.push('/dashboard')}>dataviser://</h2>
+                <Link href="/dashboard">
+                    <h2 id="nav__title--name" style={{cursor: "pointer"}}>dataviser://</h2>
+                </Link>
             </div>
             <ul id="nav__top">
                 <li id="nav__top--decorator">

@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('alert', async (message) => {
-    console.log("🚨 ALERT REÇUE:", message);
+    console.log("ALERT REÇUE:", message);
     try {
       const data = JSON.parse(message);
 
@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('detection', async (message) => {
-    console.log("🔍 DÉTECTION REÇUE:", message);
+    console.log("DÉTECTION REÇUE:", message);
     try {
       const data = JSON.parse(message);
 

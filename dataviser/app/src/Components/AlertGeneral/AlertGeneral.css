@@ -1,0 +1,61 @@
+.AlertGeneral {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins';
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    color: black;
+    background-color: #f5f3f6;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: center;
+}
+
+tbody {
+    border-top: 1px solid #B4B4B4;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: white;
+}
+
+.AlertGeneral__alertType {
+    p {
+        max-width: fit-content;
+        padding: 5px 10px 5px 10px;
+        border-radius: 15px;
+        margin: auto;
+        background-color: #fdc69a;
+    }
+}
+
+.AlertGeneral__top {
+    display: flex;
+
+    .AlertGeneral__top--left {
+        flex: 1;
+    }
+
+    .AlertGeneral__top--right {
+        position: relative;
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
+    }
+}

@@ -6,8 +6,6 @@ export default function useAlerts() {
     const [alertCount, setAlertCount] = useState(0);
     const socketRef = useRef(null);
     useEffect(() => {
-
-        console.log("useAlert : ", alerts);
         const fetchAlerts = async () => {
             try {
                 const response = await fetch('/api/ids/alert');
