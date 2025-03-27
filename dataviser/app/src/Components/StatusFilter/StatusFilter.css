@@ -1,0 +1,57 @@
+/* .StatusFilter {
+    margin-left: 2%;
+}
+
+.StatusFilter__p {
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    border: #B4B4B4 solid 1px;
+    cursor: pointer;
+}
+
+.StatusFilter__modal {
+    position: absolute;
+    top:110px;
+    left: 11px;
+    width: 50px;
+    z-index: 100;
+    background-color: red;
+} */
+
+.StatusFilter__wrapper {
+    position: relative;
+    .StatusFilter {
+        p {
+            user-select: none;
+            padding: 10px 10px 10px 10px;
+            border-radius: 10px;
+            border: #B4B4B4 solid 1px;
+            cursor: pointer;
+        }
+    }
+
+    .StatusFilter__modal {
+        position: absolute;
+        width: 100%;
+        top: 40px;
+        border-left:#B4B4B4 solid 1px;
+        border-right:#B4B4B4 solid 1px;
+        border-bottom:#B4B4B4 solid 1px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background-color: #f5f3f6;
+        z-index: 100;
+
+        ul {
+            li {
+                cursor: pointer;
+                padding-inline: 10px;
+                margin-bottom: 10px;
+            }
+
+            li:hover {
+                background-color: white;
+            }
+        }
+    }
+}

@@ -3,7 +3,6 @@
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 
-// Enregistre les composants nécessaires
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const LineChart = ({ data }) => {
@@ -25,17 +24,17 @@ const LineChart = ({ data }) => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        grid: { display: false }, // Désactive les lignes verticales
+        grid: { display: false },
       },
       y: {
-        grid: { display: false }, // Désactive les lignes horizontales
+        grid: { display: false },
         ticks:{display: false},
-        suggestedMin: 10, // Valeur minimale affichée
-        suggestedMax: 100, // Valeur maximale affichée
+        suggestedMin: 10,
+        suggestedMax: 100,
       },
     },
     plugins: {
-      legend: { position: false }, // Supprime la légende si tu veux enlever le label
+      legend: { position: false },
       tooltip: { enabled: true },
     },
   };

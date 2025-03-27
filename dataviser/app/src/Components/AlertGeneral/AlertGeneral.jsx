@@ -1,4 +1,6 @@
 import useAlerts from "../../hooks/useAlert";
+import CustomDatePicker from "../CustomDatePicker/CustomDatePicker";
+import StatusFilter from "../StatusFilter/StatusFilter";
 import "./AlertGeneral.css";
 
 export default function AlertGeneral() {
@@ -9,10 +11,10 @@ export default function AlertGeneral() {
         <div className="AlertGeneral">
             <div className="AlertGeneral__top">
                 <div className="AlertGeneral__top--left">
-                    rien
+                    <StatusFilter />
                 </div>
                 <div className="AlertGeneral__top--right">
-                    <p>Filtrer par date</p>
+                    <CustomDatePicker />
                 </div>
             </div>
             <table>
@@ -26,17 +28,23 @@ export default function AlertGeneral() {
                     </tr>
                 </thead>
                 <tbody>
-                    {alerts.map((alert) => (
+                    {alerts.length > 0 ? (alerts.map((alert) => (
                         <tr key={alert.id}>
-                            <td>{alert.id}</td>
-                            <td>{alert.srcIp}</td>
+                            <td className="AlertGeneral__alertId">{alert.id}</td>
+                            <td className="AlertGeneral__alertIp">{alert.srcIp}</td>
                             <td className="AlertGeneral__alertType">
                                 <p>{alert.alertType}</p>
                             </td>
-                            <td>{alert.description}</td>
-                            <td>{new Date(alert.timestamp).toLocaleString()}</td>
+                            <td className="AlertGeneral__description">{alert.description}</td>
+                            <td className="AlertGeneral__timestamp">{new Date(alert.timestamp).toLocaleString()}</td>
                         </tr>
-                    ))}
+                    ))) : (
+                        <tr className="AlertGeneral__noAlerts">
+                            <td>
+                                Pas d'alertes.
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>

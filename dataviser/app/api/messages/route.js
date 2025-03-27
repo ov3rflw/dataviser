@@ -1,10 +1,8 @@
-// app/api/messages/route.js
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-// Obtenir les messages
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const userId = parseInt(searchParams.get('userId'));
@@ -30,7 +28,6 @@ export async function GET(req) {
   }
 }
 
-// Créer un message
 export async function POST(req) {
   try {
     const body = await req.json();
