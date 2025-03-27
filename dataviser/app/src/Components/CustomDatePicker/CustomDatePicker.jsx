@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import useDateStore from "../../../store/useDateStore";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Popover } from "@mui/material";
 
 export default function CustomDatePicker() {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const { selectedDate, setSelectedDate } = useDateStore();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleIconClick = (event) => {
@@ -17,10 +18,15 @@ export default function CustomDatePicker() {
     setAnchorEl(null);
   };
 
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+    handleClose();
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div style={{ position: "relative", display: "inline-block" }}>
-        <p onClick={handleIconClick} style={{cursor: "pointer"}}>
+        <p onClick={handleIconClick} style={{ cursor: "pointer" }}>
           Filtrer par date
         </p>
         <Popover
@@ -38,10 +44,7 @@ export default function CustomDatePicker() {
         >
           <DatePicker
             value={selectedDate}
-            onChange={(date) => {
-              setSelectedDate(date);
-              handleClose(); 
-            }}
+            onChange={handleDateChange}
             renderInput={() => null}
           />
         </Popover>

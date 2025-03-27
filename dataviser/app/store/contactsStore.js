@@ -68,6 +68,11 @@ const useUserStore = create((set, get) => ({
     set({ users: updatedUsers });
     localStorage.setItem('users', JSON.stringify(updatedUsers));
   },
+
+  // utilisé par customDatePicker
+  setSelectedDate: (date) => {
+    set({ selectedDate: date });
+  },
   
   cleanup: () => {
     if (socket) {
