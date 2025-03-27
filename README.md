@@ -1,87 +1,98 @@
-## Pré-requis
+# Dataviser
 
-- docker-compose
-- docker
-- docker-desktop
-- npm
+Dataviser est un projet en cours de développement permettant d'analyser et de visualiser des alertes réseau en temps réel. Il repose sur plusieurs composants, notamment une application web, un serveur WebSocket et des utilitaires Python dédiés à l'analyse du trafic réseau.
 
-## Installation des pré-requis :
+## 📌 Pré-requis
 
-[Docker Desktop: The #1 Containerization Tool for Developers | Docker](https://www.docker.com/products/docker-desktop/)
+Avant d'installer et d'exécuter Dataviser, assurez-vous d'avoir les outils suivants installés sur votre machine :
 
-[Downloading and installing Node.js and npm | npm Docs](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Node.js et npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-## Télécharger le projet Dataviser
+## 🚀 Installation
 
-Tapez la commande suivante :
+### 1. Cloner le projet
+
+Exécutez la commande suivante pour récupérer le projet depuis GitHub :
 
 ```bash
 git clone https://github.com/ov3rflw/dataviser.git
 cd dataviser
 ```
 
-À l’intérieur de ce dossier, vous trouverez deux autres dossiers et un fichier de configuration.
+### 2. Structure du projet
 
-| Dossier/Fichier | Description |
-| --- | --- |
-| `application_web` | Application web |
-| `websocket_server` | Serveur WebSocket |
-| `docker-compose.yml` | Fichier de configuration pour Docker Compose |
+À l’intérieur du dossier `dataviser`, vous trouverez les éléments suivants :
 
-## Build et dockerization de Dataviser
+| Dossier/Fichier        | Description |
+|------------------------|-------------|
+| `application_web`      | Application web permettant la visualisation des alertes |
+| `websocket_server`     | Serveur WebSocket qui gère les notifications en temps réel |
+| `python_utils`        | Scripts Python pour l'analyse du trafic réseau et la détection d'intrusions |
+| `docker-compose.yml`   | Fichier de configuration pour Docker Compose |
 
-Pour pouvoir utiliser Dataviser, il faudra builder le projet et effectuer une petite manipulation sur le conteneur **app-1**.
+## 📦 Build et exécution de Dataviser
 
-### Docker Compose
+### 1. Lancer les conteneurs avec Docker Compose
 
-À la racine du projet, tapez la commande suivante : 
+À la racine du projet, exécutez la commande suivante :
 
 ```bash
-docker-compose up --build -d 
+docker-compose up --build -d
 ```
 
-Cette commande va builder les images des conteneurs avant de les démarrer en arrière-plan sans bloquer le terminal.
+Cela va builder les images des conteneurs et les démarrer en arrière-plan sans bloquer le terminal.
 
-### Configuration de `app-1`
+### 2. Configuration du conteneur `app-1`
 
-Ensuite, il faudra se connecter au conteneur **app-1** pour effectuer un push du schéma **Prisma** vers le serveur **MySQL**.
+Une fois les conteneurs en cours d'exécution, vous devez exécuter une migration du schéma Prisma vers la base de données MySQL :
 
 ```bash
-# Se connecter à app-1
+# Se connecter au conteneur `app-1`
 docker exec -it app-1 sh
+
+# Appliquer les migrations Prisma
 npx prisma migrate dev --name init
 ```
 
-## ⚠️ Problèmes connus ⚠️
+## ⚠️ Problèmes connus et solutions
 
-### Erreur de base de données
+### Erreur de connexion à la base de données
 
-S’il est impossible de se connecter à la plateforme Dataviser, il se peut que les droits de l’utilisateur `dev` dans la base de données ne soient pas les bons. Pour cela, exécutez les commandes suivantes :
+Si l'application ne parvient pas à se connecter à la base de données, il se peut que les droits de l'utilisateur `dev` ne soient pas correctement configurés. Pour résoudre ce problème, exécutez les commandes suivantes :
 
 ```bash
 docker exec -it db-1 sh
-mysql -u root -p [pass root]
+mysql -u root -p [mot_de_passe_root]
 
 GRANT ALL PRIVILEGES ON dataviser.* TO "dev"@"%";
 FLUSH PRIVILEGES;
 exit;
 ```
 
-### Erreur lors de la phase de build
+### Erreur lors du build (port 3306 déjà utilisé)
 
-Si vous obtenez une erreur comme :
+Si vous obtenez une erreur indiquant que le port `3306` est déjà alloué, cela signifie qu'un autre service MySQL tourne en arrière-plan. Pour résoudre ce problème :
 
-```bash
-docker: Error response from daemon: driver failed programming external connectivity on endpoint <container_name> (hash):
-Bind for 0.0.0.0:3306 failed: port is already allocated.
-```
-
-Il est possible qu’un service tourne sur le port `3306` et empêche la base de données du conteneur `db-1` de l’utiliser.
-
-Il faudra donc vérifier si MySQL ne tourne pas déjà en arrière-plan. Si c’est le cas, arrêtez le processus et relancez le build.
+1. Vérifiez si un service MySQL est en cours d'exécution :
+   ```bash
+   sudo netstat -tulnp | grep 3306
+   ```
+2. Arrêtez le service si nécessaire :
+   ```bash
+   sudo systemctl stop mysql
+   ```
+3. Relancez le build :
+   ```bash
+   docker-compose up --build -d
+   ```
 
 ---
 
-## 🚧 Statut du projet
+## 🚧 État du projet
 
-Dataviser n'est pas encore un projet opérationnel. Il est actuellement en cours de développement, et nous prévoyons de le sortir avant la fin de juin.
+Dataviser est encore en cours de développement. Nous prévoyons une première version opérationnelle d'ici la fin du mois de juin.
+
+N'hésitez pas à consulter notre dépôt GitHub et à nous faire part de vos suggestions !
