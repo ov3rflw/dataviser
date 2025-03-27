@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { io } from "socket.io-client";
 import useDateStore from "../../store/useDateStore";
 import dayjs from "dayjs";
 
 export default function useAlerts() {
     const [alerts, setAlerts] = useState([]);
     const [alertCount, setAlertCount] = useState(0);
+    const socketRef = useRef(null);
     const { selectedDate } = useDateStore();
 
     useEffect(() => {
@@ -14,17 +16,21 @@ export default function useAlerts() {
                 const data = await response.json();
 
                 if (data.message) {
-                    console.log("Pas d'alertes dans la base");
                     setAlerts([]);
                     setAlertCount(0);
                 } else {
                     let filteredAlerts = data.alerts;
 
-                    if (selectedDate) {
+                    if (!isNaN(selectedDate)) {
                         const selectedDateStr = dayjs(selectedDate).format("YYYY-MM-DD");
-                        filteredAlerts = filteredAlerts.filter((alert) =>
-                            alert.timestamp.startsWith(selectedDateStr)
-                        );
+
+                        filteredAlerts = filteredAlerts.filter((alert) => {
+                            const alertDate = dayjs(alert.timestamp).format("YYYY-MM-DD");
+                            return alertDate.startsWith(selectedDateStr);
+                        });
+                    } else {
+                        setAlerts(data.alerts);
+                        setAlertCount(data.alerts.length)
                     }
 
                     setAlerts(filteredAlerts);
@@ -32,11 +38,26 @@ export default function useAlerts() {
                 }
 
             } catch (error) {
-                console.error('Erreur lors de la récupération des alertes:', error);
+                console.error(error);
             }
         };
 
         fetchAlerts();
+
+        socketRef.current = io('http://localhost:3001/');
+        socketRef.current.on('alert', (newAlert) => {
+            const alertDate = dayjs(newAlert.timestamp).format("YYYY-MM-DD");
+            const selectedDateStr = selectedDate ? dayjs(selectedDate).format("YYYY-MM-DD") : null;
+
+            if (!selectedDate || alertDate === selectedDateStr) {
+                setAlerts((prevAlerts) => [...prevAlerts, newAlert]);
+                setAlertCount((prevCount) => prevCount + 1);
+            } 
+        });
+
+        return () => {
+            socketRef.current.off('alert');
+        };
     }, [selectedDate]);
 
     return { alerts, alertCount };
