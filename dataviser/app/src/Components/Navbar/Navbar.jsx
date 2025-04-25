@@ -10,6 +10,7 @@ import Logs from '../../../public/assets/logs.svg';
 import Network from '../../../public/assets/network.svg';
 import Settings from '../../../public/assets/settings.svg';
 import Stats from '../../../public/assets/monitoring.svg';
+import NetworkWired from "../../../public/assets/network_wired.svg";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -54,6 +55,14 @@ export default function Navbar(){
                         <Image src={Home} alt="home icon" />
                         <p>
                             Tableau de bord
+                        </p>
+                    </Link>
+                </li>
+                <li id="nav__top--networkPark">
+                    <Link href="/parc">
+                        <Image src={NetworkWired} alt="network wired icon" />
+                        <p>
+                            Parc réseau
                         </p>
                     </Link>
                 </li>

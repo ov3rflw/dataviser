@@ -98,10 +98,6 @@ export default function Chatbox({ senderId }) {
         return user ? `${user.firstName} ${user.lastName}` : 'Utilisateur inconnu';
     };
 
-    users.map((user) => {
-        console.log(user.id);
-    })
-
     return (
         <div className="Chatbox__component">
             <div className="Chatbox__component--left">

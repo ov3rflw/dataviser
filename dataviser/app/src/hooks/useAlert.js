@@ -21,13 +21,13 @@ export default function useAlerts() {
                 } else {
                     let filteredAlerts = data.alerts;
 
-                    if (!isNaN(selectedDate)) {
+                    if (!isNaN(selectedDate) && selectedDate != null) {
                         const selectedDateStr = dayjs(selectedDate).format("YYYY-MM-DD");
-
                         filteredAlerts = filteredAlerts.filter((alert) => {
                             const alertDate = dayjs(alert.timestamp).format("YYYY-MM-DD");
                             return alertDate.startsWith(selectedDateStr);
                         });
+
                     } else {
                         setAlerts(data.alerts);
                         setAlertCount(data.alerts.length)
@@ -52,7 +52,7 @@ export default function useAlerts() {
             if (!selectedDate || alertDate === selectedDateStr) {
                 setAlerts((prevAlerts) => [...prevAlerts, newAlert]);
                 setAlertCount((prevCount) => prevCount + 1);
-            } 
+            }
         });
 
         return () => {

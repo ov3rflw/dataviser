@@ -1,0 +1,38 @@
+.NetworkParc {
+    position: relative;
+    display: flex;
+    height: 100vh;
+    padding: 1.5%;
+    flex-direction: column;
+    background-color: red;
+
+    .NetworkParc__left--top {
+        display: flex;
+        background-color: green;
+        width: 100%;
+        height: 100%;
+
+        .NetworkParc__left--topLeft {
+            flex: 1;
+            background-color: aqua;
+
+            /* .NetworkParc__left--customerName {
+                    background-color:yellow;
+
+                    .customerName__wrapper {
+                        background-color: grey
+                    }
+                } */
+        }
+
+        .NetworkParc__left--topRight {
+            background-color: grey;
+            flex: 1;
+        }
+    }
+
+    .NetworkParc__bottom--left {
+        background-color: violet;
+    }
+
+}

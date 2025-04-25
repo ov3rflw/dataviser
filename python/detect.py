@@ -49,7 +49,7 @@ def detect_anomalies(packet):
             send_event("alert", alert)
             send_event("detection", detection)
 
-            traffic_count[src_ip] = 0  
+            traffic_count[src_ip] = 0
 
 def send_event(event, data):
     """ Envoie une alerte ou une détection au serveur WebSocket """

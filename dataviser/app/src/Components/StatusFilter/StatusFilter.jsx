@@ -1,14 +1,22 @@
 import "./StatusFilter.css"
 import { useState, useRef, useEffect } from "react";
+import useAlertFilter from "../../../store/useAlertFilter";
+import useAlerts from "../../hooks/useAlert";
 
 export default function StatusFilter() {
     const [isOpen, setIsOpen] = useState(false);
-    const currentModal = useRef();
+    const { alerts, alertCount } = useAlerts([]);
 
-    console.log(isOpen);
+    const uniqueAlertTypes = [...new Set(alerts.map(alert => alert.alertType))];
+
+    const currentModal = useRef();
 
     const openModal = () => {
         setIsOpen(!isOpen);
+    }
+
+    const handleAlertChange = () => {
+        
     }
 
     /* const handleClickOutside = (event) => {
@@ -25,6 +33,10 @@ export default function StatusFilter() {
         }
     }, []) */
 
+    useEffect(() => {
+
+    })
+
     return (
         <div className="StatusFilter__wrapper">
             <div className="StatusFilter" onClick={openModal}>
@@ -38,11 +50,11 @@ export default function StatusFilter() {
                     ref={currentModal}
                 >
                     <ul className="StatusFilter__modal--list">
-                        <li>
-                            <p>
-                                DDOS
-                            </p>
-                        </li>
+                        {uniqueAlertTypes.map((alertType, index) => (
+                            <li key={index}>
+                                <p>{alertType}</p>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             ) : null}
