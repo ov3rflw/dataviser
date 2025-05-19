@@ -46,6 +46,20 @@ services:
     networks:
       - dataviser_network
 
+  backup:
+    image: mysql:8.0
+    container_name: backup
+    entrypoint: ["/bin/sh", "-c", "/entrypoint.sh"]
+    volumes:
+      - ./backup/entrypoint.sh:/entrypoint.sh
+      - ./backup:/backup
+    depends_on:
+      - db
+    networks:
+      - dataviser_network
+    environment:
+      MYSQL_PWD: dev
+
 networks:
   dataviser_network:
     driver: bridge

@@ -1,38 +1,121 @@
+:root {
+    --backgroundColor: #f5f3f6;
+}
+
 .NetworkParc {
     position: relative;
     display: flex;
     height: 100vh;
     padding: 1.5%;
     flex-direction: column;
-    background-color: red;
+    background-color: var(--backgroundColor);
 
-    .NetworkParc__left--top {
+    .NetworkParc__top {
         display: flex;
-        background-color: green;
-        width: 100%;
-        height: 100%;
+        gap: 1%;
+        font-family: "Hubot Sans", sans-serif;
 
-        .NetworkParc__left--topLeft {
+        .NetworkParc__left--customerName,
+        .NetworkParc__left--address,
+        .NetworkParc__left--invoiceDetails {
             flex: 1;
-            background-color: aqua;
-
-            /* .NetworkParc__left--customerName {
-                    background-color:yellow;
-
-                    .customerName__wrapper {
-                        background-color: grey
-                    }
-                } */
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            border-radius: 10px;
+            background-color: white;
         }
 
-        .NetworkParc__left--topRight {
-            background-color: grey;
-            flex: 1;
+        .NetworkParc__left--customerName {
+            .customerName__wrapper {
+                display: flex;
+                width: 100%;
+
+                .customerName__wrapper--right {
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 2%;
+                    flex: 1;
+                    justify-content: center;
+                }
+            }
+        }
+
+        .NetworkParc__left--invoiceDetails {
+            background-color: blue;
         }
     }
 
-    .NetworkParc__bottom--left {
-        background-color: violet;
-    }
+    .NetworkParc__bottom {
+        display: flex;
+        gap: 1%;
+        margin-top: 1%;
+        font-family: "Hubot Sans", sans-serif;
 
+        .NetworkParc__bottom--contactInfo,
+        .NetworkParc__bottom--general {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        .NetworkParc__bottom--contactInfo {
+            h2 {
+                margin-bottom: 15px;
+            }
+
+            form {
+                h3 {
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1rem;
+                }
+
+                input {
+                    outline: none;
+                    padding: 5px;
+                    border-radius: 7px;
+                    border: none;
+                    background-color: var(--backgroundColor);
+                    width: 100%;
+                }
+            }
+        }
+
+        .NetworkParc__bottom--general {
+
+            .NetworkParc__left--generalTop,
+            .NetworkParc__left--generalBottom {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .NetworkParc__left--generalTop input,
+            .NetworkParc__left--generalBottom input {
+                margin: 2px 0 10px;
+            }
+
+            .form-group {
+                flex: 1 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .form-group h3 {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .form-group input {
+                background-color: var(--backgroundColor);
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+            }
+        }
+    }
 }
