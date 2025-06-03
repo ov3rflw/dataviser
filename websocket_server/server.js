@@ -118,11 +118,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('user_created', (newUser) => {
-    console.log('USER CREATED:', newUser);
-    io.emit('new_user_available', newUser);
-  });
-
   socket.on('disconnect', () => {
     console.log(`Client déconnecté: ${socket.id}`);
   });

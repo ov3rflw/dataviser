@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import "./Chatbox.css";
 import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 import Avatar from '../../../public/assets/profile_test.jpg';
 import Image from 'next/image';
 import useUserStore from '../../../store/contactsStore';
+import { ContactContextProvider, contactContext } from '../../context/contact';
 
 export default function Chatbox({ senderId }) {
     const [message, setMessage] = useState('');
@@ -13,18 +14,9 @@ export default function Chatbox({ senderId }) {
     const lastMessage = useRef();
     const socketRef = useRef(null);
 
-    const { users, isLoading, fetchContacts, initialize } = useUserStore();
+    const { users, loading: isLoading } = useContext(contactContext)
 
     useEffect(() => {
-        initialize();
-
-        return () => {
-            useUserStore.getState().cleanup();
-        }
-    }, [initialize]);
-
-    useEffect(() => {
-
         socketRef.current = io('http://localhost:3001');
 
         socketRef.current.on('message', newMessage => {

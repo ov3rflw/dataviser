@@ -8,44 +8,103 @@
     .loginComponent__right--wrapper {
         width: fit-content;
         height: fit-content;
+        
+        .loginComponent__right--localLogin {
+            p {
+                margin-top: 1%;
+                font-family: "Hubot Sans";
+                color: red;
+                font-size: 0.85rem;
+            }
+            form {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 20px;
+    
+                input {
+                    padding: 10px;
+                    margin-inline: 5px;
+                    border-radius: 7px;
+                    outline: none;
+                    border:none;
+                    background-color: #3c364c;
+                    color: white;
+                    border: solid 2px #3c364c;
+                }
+    
+                input:focus {
+                    border: 2px solid #6a6189;
+                }
 
-        p {
-            margin-top: 1%;
-            font-family: "Hubot Sans";
-            color: red;
-            font-size: 0.85rem;
+            }
+
         }
 
-        form {
-            display: flex;
+        .loginComponent__right--ADLogin {
+            margin-top: 7%;
+            width: max-content;
+
+            h1 {
+                color: white;
+                margin-bottom: 2%;
+                font-family:"Hubot", sans-serif;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                input {
+                    padding: 10px;
+                    margin-inline: 5px;
+                    border-radius: 7px;
+                    outline: none;
+                    border:none;
+                    background-color: #3c364c;
+                    color: white;
+                    border: solid 2px #3c364c;
+                    margin-bottom: 2%;
+                }
+    
+                input:focus {
+                    border: 2px solid #6a6189;
+                }
+            }
+        }
+
+        button {
+            margin-top: 3%;
+            background-color: #6d54b5;
+            color: white;
             width: 100%;
-            justify-content: space-between;
-            margin-top: 20px;
-
-            input {
-                padding: 10px;
-                margin-inline: 5px;
-                border-radius: 7px;
-                outline: none;
-                border:none;
-                background-color: #3c364c;
-                color: white;
-                border: solid 2px #3c364c;
-            }
-
-            input:focus {
-                border: 2px solid #6a6189;
-            }
-
-            button {
-                background-color: #6d54b5;
-                color: white;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                padding: 10px;
-                
-            }
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 10px;
+            
         }
+
     }
 }
+
+.loginComponent__right--localLogin form {
+    display: flex;
+    flex-direction: row;     /* garde les champs côte à côte */
+    gap: 20px;               /* contrôle l’espacement entre les champs */
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .loginComponent__right--localLogin form input {
+    flex: 1;                 /* chaque input prend la même largeur */
+    padding: 10px;
+    border-radius: 7px;
+    outline: none;
+    border: none;
+    background-color: #3c364c;
+    color: white;
+    border: solid 2px #3c364c;
+  }
+  

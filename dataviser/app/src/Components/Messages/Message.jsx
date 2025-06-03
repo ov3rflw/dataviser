@@ -11,6 +11,7 @@ import Arrow from '../../../public/assets/arrow.svg';
 import ArrowRight from '../../../public/assets/arrow-right.svg';
 import Close from '../../../public/assets/close.svg';
 import Chatbox from "../ChatBox/Chatbox";
+import { ContactContextProvider } from "../../context/contact";
 
 export default function Messages() {
   const [messages, setMessages] = useState([]);
@@ -112,11 +113,13 @@ export default function Messages() {
         <p></p>
       </div>
       <div className="main__messages--bottom" style={{ flexDirection: isExpanded ? "" : "" }}>
-        {isExpanded ? (
-          <Chatbox senderId={senderId}/>
-        ) : (
-          ''
-        )}
+        <ContactContextProvider>
+          {isExpanded ? (
+            <Chatbox senderId={senderId}/>
+          ) : (
+            ''
+          )}
+        </ContactContextProvider>
       </div>
     </motion.div>
   );

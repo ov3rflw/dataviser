@@ -53,7 +53,7 @@ export default function Register() {
                 lastName,
                 email,
                 password,
-                confirmPassword
+                confirmPassword,
             };
 
             const res = await fetch("http://localhost:3000/api/create", {
@@ -66,6 +66,7 @@ export default function Register() {
 
             if (res.status == 200) {
                 router.push('/');
+                
             }
 
         } else {

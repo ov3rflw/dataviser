@@ -1,3 +1,4 @@
+name: dataviser
 services:
   db:
     image: mysql:8.0
@@ -14,7 +15,10 @@ services:
       - dataviser_network
     volumes:
       - mysql_data:/var/lib/mysql
-
+  vpn:
+    container_name: wireguard
+    image: lscr.io/linuxserver/wireguard
+    
   websocket:
     build: ./websocket_server
     container_name: websocket_server
@@ -30,7 +34,7 @@ services:
       - "3001:3001"
     networks:
       - dataviser_network
-
+      
   app:
     build: ./dataviser
     env_file:
