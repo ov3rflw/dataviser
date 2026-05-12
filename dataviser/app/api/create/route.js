@@ -3,7 +3,6 @@ import { validateEmail } from "../../src/lib/validateEmail";
 import { hashPassword } from "../../src/lib/hashPassword";
 import { NextResponse } from 'next/server';
 
-// Handle POST requests
 export async function POST(request) {
   try {
     const body = await request.json();

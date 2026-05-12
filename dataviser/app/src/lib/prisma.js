@@ -1,8 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 
-const prisma = new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'],
-  });
-
-
-export { prisma }
+const adapter = new PrismaMariaDb(process.env.DATABASE_URL);
+export const prisma = new PrismaClient({ adapter });
