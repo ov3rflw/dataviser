@@ -1,8 +1,12 @@
+import "dotenv/config";
 import { Server } from 'socket.io';
 import { createServer } from 'http';
 import { PrismaClient } from "@prisma/client";
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaMariaDb(process.env.DATABASE_URL);
+const prisma = new PrismaClient({ adapter });
+
 const server = createServer();
 
 const io = new Server(server, {
@@ -17,6 +21,10 @@ io.on('connection', (socket) => {
 
   socket.on('message', (message) => {
     io.emit('message', message);
+  });
+
+  socket.on('user_created', (data) => {
+    io.emit('user_created', data);
   });
 
   socket.on('log', async (message) => {
