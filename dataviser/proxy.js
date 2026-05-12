@@ -1,56 +1,61 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
-export async function proxy(request, response) {
+const authRoutes = ["/login", "/register"];
+const protectedRoutes = ["/dashboard"];
+
+async function verifyToken(token, secret) {
+  try {
+    const verified = await jwtVerify(token, secret);
+    return verified.payload;
+  } catch {
+    return null;
+  }
+}
+
+export async function proxy(request) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get("token")?.value;
-  const authRoutes = ["/login", "/register"];
-  const protectedRoutes = ["/dashboard"];
-
   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-  if (accessToken) {
-    try {
-      const token = await jwtVerify(accessToken, secret);
-      const userId = token.payload.userId
-      const response = NextResponse.next();
-      response.headers.set('x-user-id', userId);
-      return response;
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  const isAuthRoute = authRoutes.includes(pathname);
+  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
-  if (authRoutes.includes(pathname)) {
+  if (isAuthRoute) {
     if (accessToken) {
-      try {
-        await jwtVerify(accessToken, secret);
+      const payload = await verifyToken(accessToken, secret);
+      if (payload) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
-      } catch (e) {
-        console.error("Invalid token");
       }
     }
     return NextResponse.next();
   }
 
-  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+  if (isProtectedRoute) {
     if (!accessToken) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
-
-    try {
-      await jwtVerify(accessToken, secret);
-      return NextResponse.next();
-    } catch (e) {
-      console.error("Invalid token");
+    const payload = await verifyToken(accessToken, secret);
+    if (!payload) {
       return NextResponse.redirect(new URL("/login", request.url));
+    }
+    const response = NextResponse.next();
+    response.headers.set("x-user-id", payload.userId);
+    return response;
+  }
+
+  if (pathname.startsWith("/api") && accessToken) {
+    const payload = await verifyToken(accessToken, secret);
+    if (payload) {
+      const response = NextResponse.next();
+      response.headers.set("x-user-id", payload.userId);
+      return response;
     }
   }
 
   return NextResponse.next();
 }
 
-// export config pour que le middleware soit actif sur ces endpoints
 export const config = {
   matcher: ["/dashboard/:path*", "/login", "/register", "/api/:path*"],
 };

@@ -45,9 +45,8 @@ export default function Register() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        // upgrade cette vérification plus tard
 
-        if (termCondition) {
+        if (termCondition.cond) {
             let userData = {
                 firstName,
                 lastName,
@@ -56,27 +55,35 @@ export default function Register() {
                 confirmPassword,
             };
 
-            const res = await fetch("http://localhost:3000/api/create", {
-                method: "POST",
-                body: JSON.stringify(userData),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/create`, {
+                    method: "POST",
+                    body: JSON.stringify(userData),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
 
-            if (res.status == 200) {
-                router.push('/');
-                
+                console.log(res);
+                if (res.ok) {
+                    router.push('/dashboard');
+                    return;
+                }
+
+                const response = await res.json();
+                console.log("res back: ", response);
+
+            } catch (error) {
+                console.error("Erreur fetch:", error);
             }
 
         } else {
-            console.log("veuillez accepter les conditions")
+            console.log("veuillez accepter les conditions");
         }
-
-    };
+    }
 
     const handleCheckboxChange = (event) => {
-        const isChecked = event.target.checked; // Vérifie si la checkbox est cochée
+        const isChecked = event.target.checked;
         setTermCondition({
             status: isChecked ? "Conditions d'utilisations acceptées" : "Veuillez accepter les conditions d'utilisations",
             cond: isChecked

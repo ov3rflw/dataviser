@@ -10,6 +10,7 @@ nav {
     width:15%;
     height: 100%;
     padding: 1.5%;
+    justify-content: space-between;
 }
 
 #nav__title {
@@ -26,7 +27,7 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-top: 50px;
+    margin-bottom: 20px;
 }
 
 #nav__top > li:nth-child(n+2) {
@@ -55,7 +56,6 @@ nav {
     font-size: 0.85rem;
     color: #7B7B7B;
     border-radius: 15px;
-    /*background:none;*/
     transition: background 0.3s ease;
 }
 
@@ -99,5 +99,4 @@ nav {
 
 #nav__bottom {
     text-align: center;
-    margin-top: 80%;
 }
