@@ -2,7 +2,7 @@ name: dataviser
 services:
   db:
     image: mysql:8.0
-    container_name: db-1
+    container_name: db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -12,13 +12,13 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - dataviser_network
+       - dataviser_network
     volumes:
       - mysql_data:/var/lib/mysql
   vpn:
     container_name: wireguard
     image: lscr.io/linuxserver/wireguard
-    
+
   websocket:
     build: ./websocket_server
     container_name: websocket_server
@@ -34,12 +34,12 @@ services:
       - "3001:3001"
     networks:
       - dataviser_network
-      
+
   app:
+    container_name: webapp
     build: ./dataviser
     env_file:
       - ./dataviser/.env
-    container_name: app-1
     restart: always
     depends_on:
       - db
